@@ -8,9 +8,8 @@ Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed
 4. VSCode for proto3 extension
 
 ### Setup
-1. Run Docker Desktop
-2. Install the vscode-proto3 extension by zxh404
-3. Go to Preferences --> User Settings.json. Copy and paste the following json into the file and save it
+1. Install the vscode-proto3 extension by zxh404
+2. Go to Preferences --> User Settings.json. Copy and paste the following json at the end of the file (Within the first set of curly brackets) and save it
    ```
      "protoc": {
       
@@ -19,8 +18,10 @@ Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed
       ]
     }
    ```
-5. Be in the root directory of the project (Same level as Makefile)
-6. After successful Docker Desktop startup, build the docker images. Run the following command as defined in ``Makefile``:
+   Steps 2 and 3 are to remove the red errors within the `protos` folder on the imports
+3. Run Docker Desktop
+4. Be in the root directory of the project (Same level as Makefile)
+5. After successful Docker Desktop startup, build the docker images. Run the following command as defined in ``Makefile``:
    <br><br>
     ```
     make image
@@ -33,7 +34,7 @@ Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed
     Deleted: sha256:c4e70570c66f2fdda6c18aaa28b3e0b083a3b905789df3dbe251146111f1154b
     [+] Building 15.9s (14/14) FINISHED
     ```
-7. Start up the containers with the following command:
+6. Start up the containers with the following command:
    <br><br>
    ```
    docker compose up
