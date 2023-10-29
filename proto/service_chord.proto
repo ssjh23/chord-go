@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/ssjh23/chord-go/pb";
+
+import "rpc_test.proto";
+
+service Chord {
+    rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
+    rpc RequestFromClient (GetRequestFromClient) returns (GetResponseToClient) {}
+}
