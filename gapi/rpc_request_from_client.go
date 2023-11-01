@@ -29,9 +29,9 @@ func (server *Server) RequestFromClient(ctx context.Context, req *pb.GetRequestF
 	}
 	resp := &pb.GetResponseToClient{
 		InputFromClient: req.GetInput(),
-		Id: chordResp.GetId(),
-		Ip: chordResp.GetIp(),
-		Port: chordResp.GetPort(),
+		Id:              chordResp.GetId(),
+		Ip:              chordResp.GetIp(),
+		Port:            chordResp.GetPort(),
 	}
 	return resp, nil
 }
