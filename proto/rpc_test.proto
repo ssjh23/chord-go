@@ -25,3 +25,22 @@ message GetResponseToClient {
     int32 port = 4;
 }
 
+message JoinNodeRequest{
+    string id = 1;
+}
+
+message JoinNodeResponse{
+    string id = 1;
+    string ip = 2;
+    int32 port = 3;
+}
+
+message LeaveNodeRequest{
+    string id = 1;
+}
+
+message LeaveNodeResponse{
+    string id = 1;
+    string ip = 2;
+    int32 port = 3;
+}

@@ -4,7 +4,7 @@ Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed
 ### Prerequisites
 1. Go version 1.19
 2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-3. Evans gRPC client (for testing, instructions to download are further down this README.md
+3. Evans gRPC client (for testing, instructions to download are further down this README.md)
 4. VSCode for proto3 extension
 
 ### Useful Links
@@ -122,7 +122,7 @@ Simulating a ring connection and are only contactable via the `RequestFromClient
 To add/edit/delete more functions to the gRPC server:
 
 1. Add/Edit/Delete whatever messages and services in the `/proto` folder. Add as many proto files for the messages, but keep the services to one file `service_chord.proto`
-2. Run the following command as defined in the Makefile to compule the proto files
+2. Run the following command as defined in the Makefile to compile the proto files
    ```
    make proto
    ```

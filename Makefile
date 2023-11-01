@@ -1,6 +1,6 @@
 proto:
-	rm -rf pb/*
-	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+	del /q pb\*
+	cmd /C protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
     --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 	proto/*.proto
 
