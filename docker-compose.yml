@@ -6,39 +6,39 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "9091:9091"
     environment:
       - CHORD_ID=1 
-      - SUCCESSOR_ADDRESS=chord-go-chord2-1:9091 
-      - SERVER_ADDRESS=chord-go-chord1-1:9090
+      - SUCCESSOR_ADDRESS=chord-go-chord2-1:9092
+      - SERVER_ADDRESS=chord-go-chord1-1:9091
     command:  [ "/app/main"]
   
   chord2: 
     image: chord
     ports:
-      - "9091:9091"
+      - "9092:9092"
     environment:
       - CHORD_ID=2
-      - SUCCESSOR_ADDRESS=chord-go-chord3-1:9092
-      - SERVER_ADDRESS=chord-go-chord2-1:9091
+      - SUCCESSOR_ADDRESS=chord-go-chord3-1:9093
+      - SERVER_ADDRESS=chord-go-chord2-1:9092
     command:  [ "/app/main"]
 
   chord3: 
     image: chord
     ports:
-      - "9092:9092"
+      - "9093:9093"
     environment:
       - CHORD_ID=3
-      - SUCCESSOR_ADDRESS=chord-go-chord4-1:9093 
-      - SERVER_ADDRESS=chord-go-chord3-1:9092
+      - SUCCESSOR_ADDRESS=chord-go-chord4-1:9094 
+      - SERVER_ADDRESS=chord-go-chord3-1:9093
     command:  [ "/app/main"]
 
   chord4: 
     image: chord
     ports:
-      - "9093:9093"
+      - "9094:9094"
     environment:
       - CHORD_ID=4
-      - SUCCESSOR_ADDRESS=chord-go-chord1-1:9090 
-      - SERVER_ADDRESS=chord-go-chord4-1:9093
+      - SUCCESSOR_ADDRESS=chord-go-chord1-1:9091
+      - SERVER_ADDRESS=chord-go-chord4-1:9094
     command:  [ "/app/main"]
