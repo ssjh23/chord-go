@@ -16,7 +16,7 @@ import (
 
 func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest) (*pb.FindSuccessorResponse, error) {
 
-	log.Printf("STARTING FIND SUCCESSOR: %d", n.Port)
+	log.Printf("STARTING FIND SUCCESSOR: %s", n.config.ServerAddress)
 
 	for _, key := range n.Node.Keys {
 		if key == req.RequestedKey {
