@@ -248,6 +248,320 @@ func (x *GetResponseToClient) GetPort() int32 {
 	return 0
 }
 
+type GetSuccessorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetSuccessorRequest) Reset() {
+	*x = GetSuccessorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSuccessorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSuccessorRequest) ProtoMessage() {}
+
+func (x *GetSuccessorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSuccessorRequest.ProtoReflect.Descriptor instead.
+func (*GetSuccessorRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetSuccessorRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetSuccessorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Ip   string `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
+	Port int32  `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
+}
+
+func (x *GetSuccessorResponse) Reset() {
+	*x = GetSuccessorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSuccessorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSuccessorResponse) ProtoMessage() {}
+
+func (x *GetSuccessorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSuccessorResponse.ProtoReflect.Descriptor instead.
+func (*GetSuccessorResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetSuccessorResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetSuccessorResponse) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *GetSuccessorResponse) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+type GetPredecessorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetPredecessorRequest) Reset() {
+	*x = GetPredecessorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPredecessorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPredecessorRequest) ProtoMessage() {}
+
+func (x *GetPredecessorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPredecessorRequest.ProtoReflect.Descriptor instead.
+func (*GetPredecessorRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetPredecessorRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetPredecessorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Ip   string `protobuf:"bytes,2,opt,name=ip,proto3" json:"ip,omitempty"`
+	Port int32  `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
+}
+
+func (x *GetPredecessorResponse) Reset() {
+	*x = GetPredecessorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPredecessorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPredecessorResponse) ProtoMessage() {}
+
+func (x *GetPredecessorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPredecessorResponse.ProtoReflect.Descriptor instead.
+func (*GetPredecessorResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetPredecessorResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetPredecessorResponse) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *GetPredecessorResponse) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+type GetChordPortRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetChordPortRequest) Reset() {
+	*x = GetChordPortRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetChordPortRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChordPortRequest) ProtoMessage() {}
+
+func (x *GetChordPortRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChordPortRequest.ProtoReflect.Descriptor instead.
+func (*GetChordPortRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetChordPortRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetChordPortResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Port int32 `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
+}
+
+func (x *GetChordPortResponse) Reset() {
+	*x = GetChordPortResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetChordPortResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChordPortResponse) ProtoMessage() {}
+
+func (x *GetChordPortResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChordPortResponse.ProtoReflect.Descriptor instead.
+func (*GetChordPortResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetChordPortResponse) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
 type JoinNodeRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -259,7 +573,7 @@ type JoinNodeRequest struct {
 func (x *JoinNodeRequest) Reset() {
 	*x = JoinNodeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rpc_test_proto_msgTypes[4]
+		mi := &file_rpc_test_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -272,7 +586,7 @@ func (x *JoinNodeRequest) String() string {
 func (*JoinNodeRequest) ProtoMessage() {}
 
 func (x *JoinNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rpc_test_proto_msgTypes[4]
+	mi := &file_rpc_test_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -285,7 +599,7 @@ func (x *JoinNodeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JoinNodeRequest.ProtoReflect.Descriptor instead.
 func (*JoinNodeRequest) Descriptor() ([]byte, []int) {
-	return file_rpc_test_proto_rawDescGZIP(), []int{4}
+	return file_rpc_test_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *JoinNodeRequest) GetId() string {
@@ -308,7 +622,7 @@ type JoinNodeResponse struct {
 func (x *JoinNodeResponse) Reset() {
 	*x = JoinNodeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rpc_test_proto_msgTypes[5]
+		mi := &file_rpc_test_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -321,7 +635,7 @@ func (x *JoinNodeResponse) String() string {
 func (*JoinNodeResponse) ProtoMessage() {}
 
 func (x *JoinNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rpc_test_proto_msgTypes[5]
+	mi := &file_rpc_test_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +648,7 @@ func (x *JoinNodeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JoinNodeResponse.ProtoReflect.Descriptor instead.
 func (*JoinNodeResponse) Descriptor() ([]byte, []int) {
-	return file_rpc_test_proto_rawDescGZIP(), []int{5}
+	return file_rpc_test_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *JoinNodeResponse) GetId() string {
@@ -369,7 +683,7 @@ type LeaveNodeRequest struct {
 func (x *LeaveNodeRequest) Reset() {
 	*x = LeaveNodeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rpc_test_proto_msgTypes[6]
+		mi := &file_rpc_test_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -382,7 +696,7 @@ func (x *LeaveNodeRequest) String() string {
 func (*LeaveNodeRequest) ProtoMessage() {}
 
 func (x *LeaveNodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rpc_test_proto_msgTypes[6]
+	mi := &file_rpc_test_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,7 +709,7 @@ func (x *LeaveNodeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaveNodeRequest.ProtoReflect.Descriptor instead.
 func (*LeaveNodeRequest) Descriptor() ([]byte, []int) {
-	return file_rpc_test_proto_rawDescGZIP(), []int{6}
+	return file_rpc_test_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LeaveNodeRequest) GetId() string {
@@ -418,7 +732,7 @@ type LeaveNodeResponse struct {
 func (x *LeaveNodeResponse) Reset() {
 	*x = LeaveNodeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_rpc_test_proto_msgTypes[7]
+		mi := &file_rpc_test_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -431,7 +745,7 @@ func (x *LeaveNodeResponse) String() string {
 func (*LeaveNodeResponse) ProtoMessage() {}
 
 func (x *LeaveNodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_rpc_test_proto_msgTypes[7]
+	mi := &file_rpc_test_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -444,7 +758,7 @@ func (x *LeaveNodeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaveNodeResponse.ProtoReflect.Descriptor instead.
 func (*LeaveNodeResponse) Descriptor() ([]byte, []int) {
-	return file_rpc_test_proto_rawDescGZIP(), []int{7}
+	return file_rpc_test_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *LeaveNodeResponse) GetId() string {
@@ -489,23 +803,43 @@ var file_rpc_test_proto_rawDesc = []byte{
 	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18, 0x03, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x21, 0x0a, 0x0f, 0x4a, 0x6f,
-	0x69, 0x6e, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a,
-	0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x46, 0x0a,
-	0x10, 0x4a, 0x6f, 0x69, 0x6e, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
-	0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
-	0x70, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x22, 0x0a, 0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x4e, 0x6f,
-	0x64, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x47, 0x0a, 0x11, 0x4c, 0x65, 0x61,
-	0x76, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x25, 0x0a, 0x13, 0x47, 0x65,
+	0x74, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
+	0x64, 0x22, 0x4a, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f,
+	0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x27, 0x0a,
+	0x15, 0x47, 0x65, 0x74, 0x50, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x4c, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x50, 0x72, 0x65,
+	0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70,
+	0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x70, 0x6f, 0x72, 0x74, 0x22, 0x25, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x43, 0x68, 0x6f, 0x72, 0x64,
+	0x50, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x2a, 0x0a, 0x14, 0x47,
+	0x65, 0x74, 0x43, 0x68, 0x6f, 0x72, 0x64, 0x50, 0x6f, 0x72, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x22, 0x21, 0x0a, 0x0f, 0x4a, 0x6f, 0x69, 0x6e, 0x4e,
+	0x6f, 0x64, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x46, 0x0a, 0x10, 0x4a, 0x6f,
+	0x69, 0x6e, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e,
 	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x0e,
 	0x0a, 0x02, 0x69, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x12,
 	0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f,
-	0x72, 0x74, 0x42, 0x1f, 0x5a, 0x1d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x73, 0x73, 0x6a, 0x68, 0x32, 0x33, 0x2f, 0x63, 0x68, 0x6f, 0x72, 0x64, 0x2d, 0x67, 0x6f,
-	0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x74, 0x22, 0x22, 0x0a, 0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x4e, 0x6f, 0x64, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x47, 0x0a, 0x11, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x4e,
+	0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x70,
+	0x6f, 0x72, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x42,
+	0x1f, 0x5a, 0x1d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x73,
+	0x6a, 0x68, 0x32, 0x33, 0x2f, 0x63, 0x68, 0x6f, 0x72, 0x64, 0x2d, 0x67, 0x6f, 0x2f, 0x70, 0x62,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -520,16 +854,22 @@ func file_rpc_test_proto_rawDescGZIP() []byte {
 	return file_rpc_test_proto_rawDescData
 }
 
-var file_rpc_test_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_rpc_test_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_rpc_test_proto_goTypes = []interface{}{
-	(*GetChordNodeRequest)(nil),  // 0: pb.GetChordNodeRequest
-	(*GetChordNodeResponse)(nil), // 1: pb.GetChordNodeResponse
-	(*GetRequestFromClient)(nil), // 2: pb.GetRequestFromClient
-	(*GetResponseToClient)(nil),  // 3: pb.GetResponseToClient
-	(*JoinNodeRequest)(nil),      // 4: pb.JoinNodeRequest
-	(*JoinNodeResponse)(nil),     // 5: pb.JoinNodeResponse
-	(*LeaveNodeRequest)(nil),     // 6: pb.LeaveNodeRequest
-	(*LeaveNodeResponse)(nil),    // 7: pb.LeaveNodeResponse
+	(*GetChordNodeRequest)(nil),    // 0: pb.GetChordNodeRequest
+	(*GetChordNodeResponse)(nil),   // 1: pb.GetChordNodeResponse
+	(*GetRequestFromClient)(nil),   // 2: pb.GetRequestFromClient
+	(*GetResponseToClient)(nil),    // 3: pb.GetResponseToClient
+	(*GetSuccessorRequest)(nil),    // 4: pb.GetSuccessorRequest
+	(*GetSuccessorResponse)(nil),   // 5: pb.GetSuccessorResponse
+	(*GetPredecessorRequest)(nil),  // 6: pb.GetPredecessorRequest
+	(*GetPredecessorResponse)(nil), // 7: pb.GetPredecessorResponse
+	(*GetChordPortRequest)(nil),    // 8: pb.GetChordPortRequest
+	(*GetChordPortResponse)(nil),   // 9: pb.GetChordPortResponse
+	(*JoinNodeRequest)(nil),        // 10: pb.JoinNodeRequest
+	(*JoinNodeResponse)(nil),       // 11: pb.JoinNodeResponse
+	(*LeaveNodeRequest)(nil),       // 12: pb.LeaveNodeRequest
+	(*LeaveNodeResponse)(nil),      // 13: pb.LeaveNodeResponse
 }
 var file_rpc_test_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -594,7 +934,7 @@ func file_rpc_test_proto_init() {
 			}
 		}
 		file_rpc_test_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JoinNodeRequest); i {
+			switch v := v.(*GetSuccessorRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -606,7 +946,7 @@ func file_rpc_test_proto_init() {
 			}
 		}
 		file_rpc_test_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*JoinNodeResponse); i {
+			switch v := v.(*GetSuccessorResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -618,7 +958,7 @@ func file_rpc_test_proto_init() {
 			}
 		}
 		file_rpc_test_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LeaveNodeRequest); i {
+			switch v := v.(*GetPredecessorRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -630,6 +970,78 @@ func file_rpc_test_proto_init() {
 			}
 		}
 		file_rpc_test_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPredecessorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetChordPortRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetChordPortResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*JoinNodeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*JoinNodeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LeaveNodeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LeaveNodeResponse); i {
 			case 0:
 				return &v.state
@@ -648,7 +1060,7 @@ func file_rpc_test_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rpc_test_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

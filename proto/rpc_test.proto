@@ -25,6 +25,35 @@ message GetResponseToClient {
     int32 port = 4;
 }
 
+message GetSuccessorRequest{
+    string id = 1;
+}
+
+message GetSuccessorResponse{
+    string id = 1;
+    string ip = 2;
+    int32 port = 3;
+}
+
+message GetPredecessorRequest{
+    string id = 1;
+}
+
+message GetPredecessorResponse{
+    string id = 1;
+    string ip = 2;
+    int32 port = 3;
+}
+
+message GetChordAddressRequest{
+    string id = 1;
+}
+
+message GetChordAddressResponse{
+    string port = 3;
+}
+
+
 message JoinNodeRequest{
     string id = 1;
 }

@@ -24,6 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 type ChordClient interface {
 	GetChordNode(ctx context.Context, in *GetChordNodeRequest, opts ...grpc.CallOption) (*GetChordNodeResponse, error)
 	RequestFromClient(ctx context.Context, in *GetRequestFromClient, opts ...grpc.CallOption) (*GetResponseToClient, error)
+	GetSuccessor(ctx context.Context, in *GetSuccessorRequest, opts ...grpc.CallOption) (*GetSuccessorResponse, error)
+	GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error)
+	GetChordPort(ctx context.Context, in *GetChordPortRequest, opts ...grpc.CallOption) (*GetChordPortResponse, error)
 	JoinNode(ctx context.Context, in *JoinNodeRequest, opts ...grpc.CallOption) (*JoinNodeResponse, error)
 	LeaveNode(ctx context.Context, in *LeaveNodeRequest, opts ...grpc.CallOption) (*LeaveNodeResponse, error)
 }
@@ -54,6 +57,33 @@ func (c *chordClient) RequestFromClient(ctx context.Context, in *GetRequestFromC
 	return out, nil
 }
 
+func (c *chordClient) GetSuccessor(ctx context.Context, in *GetSuccessorRequest, opts ...grpc.CallOption) (*GetSuccessorResponse, error) {
+	out := new(GetSuccessorResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetSuccessor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error) {
+	out := new(GetPredecessorResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetPredecessor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) GetChordPort(ctx context.Context, in *GetChordPortRequest, opts ...grpc.CallOption) (*GetChordPortResponse, error) {
+	out := new(GetChordPortResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetChordPort", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *chordClient) JoinNode(ctx context.Context, in *JoinNodeRequest, opts ...grpc.CallOption) (*JoinNodeResponse, error) {
 	out := new(JoinNodeResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/JoinNode", in, out, opts...)
@@ -78,6 +108,9 @@ func (c *chordClient) LeaveNode(ctx context.Context, in *LeaveNodeRequest, opts 
 type ChordServer interface {
 	GetChordNode(context.Context, *GetChordNodeRequest) (*GetChordNodeResponse, error)
 	RequestFromClient(context.Context, *GetRequestFromClient) (*GetResponseToClient, error)
+	GetSuccessor(context.Context, *GetSuccessorRequest) (*GetSuccessorResponse, error)
+	GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error)
+	GetChordPort(context.Context, *GetChordPortRequest) (*GetChordPortResponse, error)
 	JoinNode(context.Context, *JoinNodeRequest) (*JoinNodeResponse, error)
 	LeaveNode(context.Context, *LeaveNodeRequest) (*LeaveNodeResponse, error)
 	mustEmbedUnimplementedChordServer()
@@ -92,6 +125,15 @@ func (UnimplementedChordServer) GetChordNode(context.Context, *GetChordNodeReque
 }
 func (UnimplementedChordServer) RequestFromClient(context.Context, *GetRequestFromClient) (*GetResponseToClient, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestFromClient not implemented")
+}
+func (UnimplementedChordServer) GetSuccessor(context.Context, *GetSuccessorRequest) (*GetSuccessorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSuccessor not implemented")
+}
+func (UnimplementedChordServer) GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPredecessor not implemented")
+}
+func (UnimplementedChordServer) GetChordPort(context.Context, *GetChordPortRequest) (*GetChordPortResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChordPort not implemented")
 }
 func (UnimplementedChordServer) JoinNode(context.Context, *JoinNodeRequest) (*JoinNodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinNode not implemented")
@@ -148,6 +190,60 @@ func _Chord_RequestFromClient_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chord_GetSuccessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSuccessorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).GetSuccessor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/GetSuccessor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).GetSuccessor(ctx, req.(*GetSuccessorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chord_GetPredecessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPredecessorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).GetPredecessor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/GetPredecessor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).GetPredecessor(ctx, req.(*GetPredecessorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chord_GetChordPort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChordPortRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).GetChordPort(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/GetChordPort",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).GetChordPort(ctx, req.(*GetChordPortRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Chord_JoinNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(JoinNodeRequest)
 	if err := dec(in); err != nil {
@@ -198,6 +294,18 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RequestFromClient",
 			Handler:    _Chord_RequestFromClient_Handler,
+		},
+		{
+			MethodName: "GetSuccessor",
+			Handler:    _Chord_GetSuccessor_Handler,
+		},
+		{
+			MethodName: "GetPredecessor",
+			Handler:    _Chord_GetPredecessor_Handler,
+		},
+		{
+			MethodName: "GetChordPort",
+			Handler:    _Chord_GetChordPort_Handler,
 		},
 		{
 			MethodName: "JoinNode",
