@@ -11,7 +11,7 @@ service Chord {
     rpc RequestFromClient (GetRequestFromClient) returns (GetResponseToClient) {}
     rpc GetSuccessor (GetSuccessorRequest) returns (GetSuccessorResponse) {}
     rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
-    rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
+    // rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
     rpc JoinNode (JoinNodeRequest) returns (JoinNodeResponse) {}
     rpc LeaveNode (LeaveNodeRequest) returns (LeaveNodeResponse) {}
 }
