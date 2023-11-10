@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 	"time"
 
 	"github.com/ssjh23/chord-go/gapi"
@@ -36,12 +37,12 @@ func runGrpcServer(config util.Config) {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	log.Printf("Start gRPC server on %s", listener.Addr().String())
-	// go func() {
-	// 	for {
-	// 		time.Sleep(5 * time.Second) // Adjust the interval based on your requirements
-	// 		updateSuccessorAddress(config)
-	// 	}
-	// }()
+	go func() {
+		for {
+			time.Sleep(5 * time.Second) // Adjust the interval based on your requirements
+			changeSuccessorAddress(config, "new-successor-address")
+		}
+	}()
 	err = grpcServer.Serve(listener)
 
 	if err != nil {
@@ -50,18 +51,16 @@ func runGrpcServer(config util.Config) {
 
 }
 
-// func joinChordRing(config util.Config, existingNodeAddress string){
-// 	// Make an RPC call to the existing node to get its successor
-// 	// Set the successor of the new node to the successor of the existing node
-
-// 	log.Printf("Node address ___ joined the Chord ring with successor at %s\n", existingNodeAddress)
-// 	return updatedConfig
-// }
-
-func updateSuccessorAddress(config util.Config) {
+func changeSuccessorAddress(config util.Config, newSuccessorAddress string) {
 	// Implement the logic to dynamically obtain the successor address
 	// and update the config.SuccessorAddress
-	// ...
+	if config.ChordId == "5" || config.ChordId == "6" { //cords that do not have a successor_address
+		// Update the environment variable within the code
+		os.Setenv("SUCCESSOR_ADDRESS", newSuccessorAddress)
 
-	log.Printf("Updated successor address to %s", config.SuccessorAddress)
+		// Also, update the config if needed
+		config.SuccessorAddress = os.Getenv("SUCCESSOR_ADDRESS")
+	}
+
+	log.Printf("I am chord %s and my address is %s, my successor is %s", config.ChordId, config.ServerAddress, config.SuccessorAddress)
 }

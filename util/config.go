@@ -4,8 +4,8 @@ import "github.com/spf13/viper"
 
 type Config struct {
 	SuccessorAddress string `mapstructure:"SUCCESSOR_ADDRESS"`
-	ServerAddress string `mapstructure:"SERVER_ADDRESS"`
-	ChordId string `mapstructure:"CHORD_ID"`
+	ServerAddress    string `mapstructure:"SERVER_ADDRESS"`
+	ChordId          string `mapstructure:"CHORD_ID"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
