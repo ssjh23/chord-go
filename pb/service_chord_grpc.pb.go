@@ -26,7 +26,7 @@ type ChordClient interface {
 	RequestFromClient(ctx context.Context, in *GetRequestFromClient, opts ...grpc.CallOption) (*GetResponseToClient, error)
 	GetSuccessor(ctx context.Context, in *GetSuccessorRequest, opts ...grpc.CallOption) (*GetSuccessorResponse, error)
 	GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error)
-	GetChordPort(ctx context.Context, in *GetChordPortRequest, opts ...grpc.CallOption) (*GetChordPortResponse, error)
+	// rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
 	JoinNode(ctx context.Context, in *JoinNodeRequest, opts ...grpc.CallOption) (*JoinNodeResponse, error)
 	LeaveNode(ctx context.Context, in *LeaveNodeRequest, opts ...grpc.CallOption) (*LeaveNodeResponse, error)
 }
@@ -75,15 +75,6 @@ func (c *chordClient) GetPredecessor(ctx context.Context, in *GetPredecessorRequ
 	return out, nil
 }
 
-func (c *chordClient) GetChordPort(ctx context.Context, in *GetChordPortRequest, opts ...grpc.CallOption) (*GetChordPortResponse, error) {
-	out := new(GetChordPortResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/GetChordPort", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *chordClient) JoinNode(ctx context.Context, in *JoinNodeRequest, opts ...grpc.CallOption) (*JoinNodeResponse, error) {
 	out := new(JoinNodeResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/JoinNode", in, out, opts...)
@@ -110,7 +101,7 @@ type ChordServer interface {
 	RequestFromClient(context.Context, *GetRequestFromClient) (*GetResponseToClient, error)
 	GetSuccessor(context.Context, *GetSuccessorRequest) (*GetSuccessorResponse, error)
 	GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error)
-	GetChordPort(context.Context, *GetChordPortRequest) (*GetChordPortResponse, error)
+	// rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
 	JoinNode(context.Context, *JoinNodeRequest) (*JoinNodeResponse, error)
 	LeaveNode(context.Context, *LeaveNodeRequest) (*LeaveNodeResponse, error)
 	mustEmbedUnimplementedChordServer()
@@ -131,9 +122,6 @@ func (UnimplementedChordServer) GetSuccessor(context.Context, *GetSuccessorReque
 }
 func (UnimplementedChordServer) GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPredecessor not implemented")
-}
-func (UnimplementedChordServer) GetChordPort(context.Context, *GetChordPortRequest) (*GetChordPortResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetChordPort not implemented")
 }
 func (UnimplementedChordServer) JoinNode(context.Context, *JoinNodeRequest) (*JoinNodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinNode not implemented")
@@ -226,24 +214,6 @@ func _Chord_GetPredecessor_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Chord_GetChordPort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetChordPortRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChordServer).GetChordPort(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.Chord/GetChordPort",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChordServer).GetChordPort(ctx, req.(*GetChordPortRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Chord_JoinNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(JoinNodeRequest)
 	if err := dec(in); err != nil {
@@ -302,10 +272,6 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPredecessor",
 			Handler:    _Chord_GetPredecessor_Handler,
-		},
-		{
-			MethodName: "GetChordPort",
-			Handler:    _Chord_GetChordPort_Handler,
 		},
 		{
 			MethodName: "JoinNode",

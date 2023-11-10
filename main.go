@@ -37,12 +37,16 @@ func runGrpcServer(config util.Config) {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	log.Printf("Start gRPC server on %s", listener.Addr().String())
+
+	// testing adding of new nodes
 	go func() {
 		for {
 			time.Sleep(5 * time.Second) // Adjust the interval based on your requirements
-			changeSuccessorAddress(config, "new-successor-address")
+			log.Printf("I am chord %s and my address is %s, my successor is %s, my predecessor is %s", config.ChordId, config.ServerAddress, config.SuccessorAddress, config.Predecessor_Address)
+			// changeSuccessorAddress(config, "new-successor-address")
 		}
 	}()
+
 	err = grpcServer.Serve(listener)
 
 	if err != nil {

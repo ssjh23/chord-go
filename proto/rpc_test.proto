@@ -38,7 +38,7 @@ message GetPredecessorRequest{
 }
 
 message GetPredecessorResponse{
-    string successor = 1;
+    string predecessor = 1;
 }
 
 message JoinNodeRequest{
@@ -47,8 +47,9 @@ message JoinNodeRequest{
 
 message JoinNodeResponse{
     string id = 1;
-    string ip = 2;
-    int32 port = 3;
+    string successor = 2;
+    string address = 3;
+    string predecessor = 4;
 }
 
 message LeaveNodeRequest{
@@ -57,6 +58,7 @@ message LeaveNodeRequest{
 
 message LeaveNodeResponse{
     string id = 1;
-    string ip = 2;
-    int32 port = 3;
+    string successor = 2;
+    string address = 3;
+    string predecessor = 4;
 }
