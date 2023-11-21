@@ -18,19 +18,12 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const (
-	Chord_GetChordNode_FullMethodName      = "/pb.Chord/GetChordNode"
-	Chord_RequestFromClient_FullMethodName = "/pb.Chord/RequestFromClient"
-	Chord_FindSuccessor_FullMethodName     = "/pb.Chord/FindSuccessor"
-)
-
 // ChordClient is the client API for Chord service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChordClient interface {
 	GetChordNode(ctx context.Context, in *GetChordNodeRequest, opts ...grpc.CallOption) (*GetChordNodeResponse, error)
 	RequestFromClient(ctx context.Context, in *GetRequestFromClient, opts ...grpc.CallOption) (*GetResponseToClient, error)
-	FindSuccessor(ctx context.Context, in *FindSuccessorRequest, opts ...grpc.CallOption) (*FindSuccessorResponse, error)
 	GetSuccessor(ctx context.Context, in *GetSuccessorRequest, opts ...grpc.CallOption) (*GetSuccessorResponse, error)
 	GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error)
 	// rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
@@ -48,7 +41,7 @@ func NewChordClient(cc grpc.ClientConnInterface) ChordClient {
 
 func (c *chordClient) GetChordNode(ctx context.Context, in *GetChordNodeRequest, opts ...grpc.CallOption) (*GetChordNodeResponse, error) {
 	out := new(GetChordNodeResponse)
-	err := c.cc.Invoke(ctx, Chord_GetChordNode_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetChordNode", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +104,6 @@ type ChordServer interface {
 	// rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}
 	JoinNode(context.Context, *JoinNodeRequest) (*JoinNodeResponse, error)
 	LeaveNode(context.Context, *LeaveNodeRequest) (*LeaveNodeResponse, error)
-	FindSuccessor(context.Context, *FindSuccessorRequest) (*FindSuccessorResponse, error)
 	mustEmbedUnimplementedChordServer()
 }
 
@@ -137,9 +129,6 @@ func (UnimplementedChordServer) JoinNode(context.Context, *JoinNodeRequest) (*Jo
 func (UnimplementedChordServer) LeaveNode(context.Context, *LeaveNodeRequest) (*LeaveNodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveNode not implemented")
 }
-func (UnimplementedChordServer) FindSuccessor(context.Context, *FindSuccessorRequest) (*FindSuccessorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindSuccessor not implemented")
-}
 func (UnimplementedChordServer) mustEmbedUnimplementedChordServer() {}
 
 // UnsafeChordServer may be embedded to opt out of forward compatibility for this service.
@@ -163,7 +152,7 @@ func _Chord_GetChordNode_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Chord_GetChordNode_FullMethodName,
+		FullMethod: "/pb.Chord/GetChordNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).GetChordNode(ctx, req.(*GetChordNodeRequest))
@@ -181,7 +170,7 @@ func _Chord_RequestFromClient_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Chord_RequestFromClient_FullMethodName,
+		FullMethod: "/pb.Chord/RequestFromClient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).RequestFromClient(ctx, req.(*GetRequestFromClient))
@@ -261,24 +250,6 @@ func _Chord_LeaveNode_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Chord_FindSuccessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindSuccessorRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ChordServer).FindSuccessor(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Chord_FindSuccessor_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChordServer).FindSuccessor(ctx, req.(*FindSuccessorRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Chord_ServiceDesc is the grpc.ServiceDesc for Chord service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -309,10 +280,6 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LeaveNode",
 			Handler:    _Chord_LeaveNode_Handler,
-		},
-		{
-			MethodName: "FindSuccessor",
-			Handler:    _Chord_FindSuccessor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

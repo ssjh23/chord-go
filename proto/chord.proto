@@ -4,17 +4,8 @@ package pb;
 
 option go_package = "github.com/ssjh23/chord-go/pb";
 
-message Finger {
-    int64 key = 1;
-    int64 nodeAddr = 2;
-}
-
 message Node {
-    int64 id = 1;
+    string id = 1;
     string ip = 2;
-    int64 port = 3;
-    repeated Finger fTable = 4;
-    repeated int64 keys = 5;
-    Node successor = 6;
-    Node predecessor = 7;
+    int32 port = 3;
 }
