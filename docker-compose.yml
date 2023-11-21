@@ -8,7 +8,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - CHORD_ID=1 
+      - CHORD_ID=0 
       - SUCCESSOR_ADDRESS=chord-go-chord2-1:9091 
       - SERVER_ADDRESS=chord-go-chord1-1:9090
       - PREDECESSOR_ADDRESS=chord-go-chord6-1:9093
@@ -19,7 +19,7 @@ services:
     ports:
       - "9091:9091"
     environment:
-      - CHORD_ID=2
+      - CHORD_ID=1
       - SUCCESSOR_ADDRESS=chord-go-chord3-1:9092
       - SERVER_ADDRESS=chord-go-chord2-1:9091
       - PREDECESSOR_ADDRESS=chord-go-chord1-1:9090
@@ -30,7 +30,7 @@ services:
     ports:
       - "9092:9092"
     environment:
-      - CHORD_ID=3
+      - CHORD_ID=2
       - SUCCESSOR_ADDRESS=chord-go-chord4-1:9093 
       - SERVER_ADDRESS=chord-go-chord3-1:9092
       - PREDECESSOR_ADDRESS=chord-go-chord2-1:9091
@@ -41,7 +41,7 @@ services:
     ports:
       - "9093:9093"
     environment:
-      - CHORD_ID=4
+      - CHORD_ID=3
       - SUCCESSOR_ADDRESS=chord-go-chord1-1:9090 
       - SERVER_ADDRESS=chord-go-chord4-1:9093
       - PREDECESSOR_ADDRESS=chord-go-chord3-1:9092
@@ -52,7 +52,7 @@ services:
     ports:
       - "9094:9094"
     environment:
-      - CHORD_ID=5
+      - CHORD_ID=4
       - SUCCESSOR_ADDRESS=
       - SERVER_ADDRESS=chord-go-chord5-1:9094
       - PREDECESSOR_ADDRESS=
@@ -63,7 +63,7 @@ services:
     ports:
       - "9095:9095"
     environment:
-      - CHORD_ID=6
+      - CHORD_ID=5
       - SUCCESSOR_ADDRESS= 
       - SERVER_ADDRESS=chord-go-chord6-1:9095
       - PREDECESSOR_ADDRESS=

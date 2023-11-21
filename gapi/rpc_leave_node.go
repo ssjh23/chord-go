@@ -13,7 +13,9 @@ import (
 func (server *Server) LeaveNode(ctx context.Context, req *pb.LeaveNodeRequest) (*pb.LeaveNodeResponse, error) {
 	flag.Parse()
 	os.Setenv("SUCCESSOR_ADDRESS", "")
+	// to implement inform successor to update predecessor
 	os.Setenv("PREDECESSOR_ADDRESS", "")
+	// to implement inform predecessor to update successor
 	if req.GetId() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty")
 	}
