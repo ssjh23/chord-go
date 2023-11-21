@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "9091:9091"
     environment:
       - CHORD_ID=0 
       - SUCCESSOR_ADDRESS=chord-go-chord2-1:9091 
@@ -17,7 +17,7 @@ services:
   chord2: 
     image: chord
     ports:
-      - "9091:9091"
+      - "9092:9092"
     environment:
       - CHORD_ID=1
       - SUCCESSOR_ADDRESS=chord-go-chord3-1:9092
@@ -28,7 +28,7 @@ services:
   chord3: 
     image: chord
     ports:
-      - "9092:9092"
+      - "9093:9093"
     environment:
       - CHORD_ID=2
       - SUCCESSOR_ADDRESS=chord-go-chord4-1:9093 
@@ -39,7 +39,7 @@ services:
   chord4: 
     image: chord
     ports:
-      - "9093:9093"
+      - "9094:9094"
     environment:
       - CHORD_ID=3
       - SUCCESSOR_ADDRESS=chord-go-chord1-1:9090 

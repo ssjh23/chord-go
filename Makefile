@@ -11,4 +11,4 @@ image:
 	docker image rm chord:latest
 	docker build -t chord:latest .
 	
-.PHONY: proto server_local
+.PHONY: proto server_local protowin

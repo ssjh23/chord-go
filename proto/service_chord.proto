@@ -5,10 +5,12 @@ package pb;
 option go_package = "github.com/ssjh23/chord-go/pb";
 
 import "rpc_test.proto";
+import "finger_table.proto";
 
 service Chord {
     rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
     rpc RequestFromClient (GetRequestFromClient) returns (GetResponseToClient) {}
+    rpc FindSuccessor (FindSuccessorRequest) returns (google.protobuf.Empty) {}
     rpc GetSuccessor (GetSuccessorRequest) returns (GetSuccessorResponse) {}
     rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
     // rpc GetChordPort (GetChordPortRequest) returns (GetChordPortResponse) {}

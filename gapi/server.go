@@ -9,10 +9,22 @@ import (
 type Server struct {
 	pb.UnimplementedChordServer
 	config util.Config
+	// id          int
+	// fTable      []*Finger
+	// keys        []int
+	// successor   *Server
+	// predecessor *Server
+	pb.Node
+}
+
+type Finger struct {
+	key int64
+	// node *Server
+	pb.Node
 }
 
 // Newserver creates a new gRPC server
-func NewServer(config util.Config)(*Server, error){
+func NewServer(config util.Config) (*Server, error) {
 	server := &Server{
 		config: config,
 	}
