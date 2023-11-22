@@ -42,3 +42,4 @@ message GetValueFromKeyRequest {
 message GetValueFromKeyResponse {
     string value = 1;
 }
+

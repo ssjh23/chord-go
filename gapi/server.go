@@ -39,11 +39,11 @@ func InitNode(config util.Config) (Node, error) {
 	// create a new node
 	fmt.Println("Initialising a new node...\n")
 	node := Node{
-		myIpAddress: config.ServerAddress,
-		fTable:      []*Finger{},
-		data:        map[string]string{},
-		// successorAddress:   config.SuccessorAddress,
-		// predecessorAddress: config.PredecessorAddress,
+		myIpAddress:        config.ServerAddress,
+		fTable:             []*Finger{},
+		data:               map[string]string{},
+		successorAddress:   config.SuccessorAddress,
+		predecessorAddress: config.PredecessorAddress,
 	}
 
 	populateFingerTables(&node)

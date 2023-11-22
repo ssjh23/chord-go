@@ -17,6 +17,7 @@ service Chord {
     rpc GetValueFromKey (GetValueFromKeyRequest) returns (GetValueFromKeyResponse) {}
     rpc CreateRing (CreateRingRequest) returns (CreateRingResponse){}
     rpc JoinRing (JoinRingRequest) returns (JoinRingResponse){}
-    // rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
-    // rpc Notify (NotifyRequest) returns (NotifyResponse){}
+    rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
+    rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
+    rpc Notify (NotifyRequest) returns (NotifyResponse){}
 }   

@@ -484,6 +484,288 @@ func (x *JoinRingResponse) GetPredecessorAddress() string {
 	return ""
 }
 
+type StabilizeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IpAddress string `protobuf:"bytes,1,opt,name=ip_address,json=ipAddress,proto3" json:"ip_address,omitempty"`
+}
+
+func (x *StabilizeRequest) Reset() {
+	*x = StabilizeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StabilizeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StabilizeRequest) ProtoMessage() {}
+
+func (x *StabilizeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StabilizeRequest.ProtoReflect.Descriptor instead.
+func (*StabilizeRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *StabilizeRequest) GetIpAddress() string {
+	if x != nil {
+		return x.IpAddress
+	}
+	return ""
+}
+
+type StabilizeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SuccessorAddress string `protobuf:"bytes,1,opt,name=successor_address,json=successorAddress,proto3" json:"successor_address,omitempty"`
+}
+
+func (x *StabilizeResponse) Reset() {
+	*x = StabilizeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StabilizeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StabilizeResponse) ProtoMessage() {}
+
+func (x *StabilizeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StabilizeResponse.ProtoReflect.Descriptor instead.
+func (*StabilizeResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *StabilizeResponse) GetSuccessorAddress() string {
+	if x != nil {
+		return x.SuccessorAddress
+	}
+	return ""
+}
+
+type GetPredecessorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IpAddress string `protobuf:"bytes,1,opt,name=ip_address,json=ipAddress,proto3" json:"ip_address,omitempty"`
+}
+
+func (x *GetPredecessorRequest) Reset() {
+	*x = GetPredecessorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPredecessorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPredecessorRequest) ProtoMessage() {}
+
+func (x *GetPredecessorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPredecessorRequest.ProtoReflect.Descriptor instead.
+func (*GetPredecessorRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetPredecessorRequest) GetIpAddress() string {
+	if x != nil {
+		return x.IpAddress
+	}
+	return ""
+}
+
+type GetPredecessorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PredecessorAddress string `protobuf:"bytes,1,opt,name=predecessor_address,json=predecessorAddress,proto3" json:"predecessor_address,omitempty"`
+}
+
+func (x *GetPredecessorResponse) Reset() {
+	*x = GetPredecessorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPredecessorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPredecessorResponse) ProtoMessage() {}
+
+func (x *GetPredecessorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPredecessorResponse.ProtoReflect.Descriptor instead.
+func (*GetPredecessorResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetPredecessorResponse) GetPredecessorAddress() string {
+	if x != nil {
+		return x.PredecessorAddress
+	}
+	return ""
+}
+
+type NotifyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IpAddress string `protobuf:"bytes,1,opt,name=ip_address,json=ipAddress,proto3" json:"ip_address,omitempty"`
+}
+
+func (x *NotifyRequest) Reset() {
+	*x = NotifyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NotifyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NotifyRequest) ProtoMessage() {}
+
+func (x *NotifyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NotifyRequest.ProtoReflect.Descriptor instead.
+func (*NotifyRequest) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *NotifyRequest) GetIpAddress() string {
+	if x != nil {
+		return x.IpAddress
+	}
+	return ""
+}
+
+type NotifyResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PredecessorAddress string `protobuf:"bytes,1,opt,name=predecessor_address,json=predecessorAddress,proto3" json:"predecessor_address,omitempty"`
+}
+
+func (x *NotifyResponse) Reset() {
+	*x = NotifyResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_rpc_test_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NotifyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NotifyResponse) ProtoMessage() {}
+
+func (x *NotifyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_rpc_test_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NotifyResponse.ProtoReflect.Descriptor instead.
+func (*NotifyResponse) Descriptor() ([]byte, []int) {
+	return file_rpc_test_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *NotifyResponse) GetPredecessorAddress() string {
+	if x != nil {
+		return x.PredecessorAddress
+	}
+	return ""
+}
+
 var File_rpc_test_proto protoreflect.FileDescriptor
 
 var file_rpc_test_proto_rawDesc = []byte{
@@ -532,10 +814,33 @@ var file_rpc_test_proto_rawDesc = []byte{
 	0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2e,
 	0x0a, 0x12, 0x70, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64,
 	0x72, 0x65, 0x73, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x70, 0x72, 0x65, 0x64,
-	0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x1f,
-	0x5a, 0x1d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x73, 0x6a,
-	0x68, 0x32, 0x33, 0x2f, 0x63, 0x68, 0x6f, 0x72, 0x64, 0x2d, 0x67, 0x6f, 0x2f, 0x70, 0x62, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x31,
+	0x0a, 0x10, 0x53, 0x74, 0x61, 0x62, 0x69, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x70, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x70, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x22, 0x40, 0x0a, 0x11, 0x53, 0x74, 0x61, 0x62, 0x69, 0x6c, 0x69, 0x7a, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a, 0x11, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
+	0x73, 0x6f, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x10, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x22, 0x36, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x50, 0x72, 0x65, 0x64, 0x65, 0x63,
+	0x65, 0x73, 0x73, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a,
+	0x69, 0x70, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x69, 0x70, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x49, 0x0a, 0x16, 0x47,
+	0x65, 0x74, 0x50, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2f, 0x0a, 0x13, 0x70, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65,
+	0x73, 0x73, 0x6f, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x12, 0x70, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x2e, 0x0a, 0x0d, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x79,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x70, 0x5f, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x70, 0x41,
+	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x41, 0x0a, 0x0e, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x79,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2f, 0x0a, 0x13, 0x70, 0x72, 0x65, 0x64,
+	0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x70, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73,
+	0x6f, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x1f, 0x5a, 0x1d, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x73, 0x6a, 0x68, 0x32, 0x33, 0x2f, 0x63,
+	0x68, 0x6f, 0x72, 0x64, 0x2d, 0x67, 0x6f, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -550,16 +855,22 @@ func file_rpc_test_proto_rawDescGZIP() []byte {
 	return file_rpc_test_proto_rawDescData
 }
 
-var file_rpc_test_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_rpc_test_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_rpc_test_proto_goTypes = []interface{}{
-	(*GetChordNodeRequest)(nil),  // 0: pb.GetChordNodeRequest
-	(*GetChordNodeResponse)(nil), // 1: pb.GetChordNodeResponse
-	(*GetRequestFromClient)(nil), // 2: pb.GetRequestFromClient
-	(*GetResponseToClient)(nil),  // 3: pb.GetResponseToClient
-	(*CreateRingRequest)(nil),    // 4: pb.CreateRingRequest
-	(*CreateRingResponse)(nil),   // 5: pb.CreateRingResponse
-	(*JoinRingRequest)(nil),      // 6: pb.JoinRingRequest
-	(*JoinRingResponse)(nil),     // 7: pb.JoinRingResponse
+	(*GetChordNodeRequest)(nil),    // 0: pb.GetChordNodeRequest
+	(*GetChordNodeResponse)(nil),   // 1: pb.GetChordNodeResponse
+	(*GetRequestFromClient)(nil),   // 2: pb.GetRequestFromClient
+	(*GetResponseToClient)(nil),    // 3: pb.GetResponseToClient
+	(*CreateRingRequest)(nil),      // 4: pb.CreateRingRequest
+	(*CreateRingResponse)(nil),     // 5: pb.CreateRingResponse
+	(*JoinRingRequest)(nil),        // 6: pb.JoinRingRequest
+	(*JoinRingResponse)(nil),       // 7: pb.JoinRingResponse
+	(*StabilizeRequest)(nil),       // 8: pb.StabilizeRequest
+	(*StabilizeResponse)(nil),      // 9: pb.StabilizeResponse
+	(*GetPredecessorRequest)(nil),  // 10: pb.GetPredecessorRequest
+	(*GetPredecessorResponse)(nil), // 11: pb.GetPredecessorResponse
+	(*NotifyRequest)(nil),          // 12: pb.NotifyRequest
+	(*NotifyResponse)(nil),         // 13: pb.NotifyResponse
 }
 var file_rpc_test_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -671,6 +982,78 @@ func file_rpc_test_proto_init() {
 				return nil
 			}
 		}
+		file_rpc_test_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StabilizeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StabilizeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPredecessorRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPredecessorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NotifyRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_rpc_test_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NotifyResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -678,7 +1061,7 @@ func file_rpc_test_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_rpc_test_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

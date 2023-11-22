@@ -16,16 +16,16 @@ func (n *Server) CreateRing(ctx context.Context, req *pb.CreateRingRequest) (*pb
 	}
 
 	m := 6
-	node := n.Node
-	node.successorAddress = node.myIpAddress
-	node.predecessorAddress = "nil"
-	myHashedIp := Sha1Modulo(node.myIpAddress, m)
+
+	n.Node.successorAddress = n.Node.myIpAddress
+	n.Node.predecessorAddress = "nil"
+	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 
 	resp := &pb.CreateRingResponse{
 		HashedID:           myHashedIp,
-		Address:            node.myIpAddress,
-		SuccessorAddress:   node.successorAddress,
-		PredecessorAddress: node.predecessorAddress,
+		Address:            n.Node.myIpAddress,
+		SuccessorAddress:   n.Node.successorAddress,
+		PredecessorAddress: n.Node.predecessorAddress,
 	}
 	return resp, nil
 }

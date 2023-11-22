@@ -31,6 +31,9 @@ type ChordClient interface {
 	GetValueFromKey(ctx context.Context, in *GetValueFromKeyRequest, opts ...grpc.CallOption) (*GetValueFromKeyResponse, error)
 	CreateRing(ctx context.Context, in *CreateRingRequest, opts ...grpc.CallOption) (*CreateRingResponse, error)
 	JoinRing(ctx context.Context, in *JoinRingRequest, opts ...grpc.CallOption) (*JoinRingResponse, error)
+	Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error)
+	GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error)
+	Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error)
 }
 
 type chordClient struct {
@@ -113,6 +116,33 @@ func (c *chordClient) JoinRing(ctx context.Context, in *JoinRingRequest, opts ..
 	return out, nil
 }
 
+func (c *chordClient) Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error) {
+	out := new(StabilizeResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/Stabilize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error) {
+	out := new(GetPredecessorResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetPredecessor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error) {
+	out := new(NotifyResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/Notify", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChordServer is the server API for Chord service.
 // All implementations must embed UnimplementedChordServer
 // for forward compatibility
@@ -126,6 +156,9 @@ type ChordServer interface {
 	GetValueFromKey(context.Context, *GetValueFromKeyRequest) (*GetValueFromKeyResponse, error)
 	CreateRing(context.Context, *CreateRingRequest) (*CreateRingResponse, error)
 	JoinRing(context.Context, *JoinRingRequest) (*JoinRingResponse, error)
+	Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error)
+	GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error)
+	Notify(context.Context, *NotifyRequest) (*NotifyResponse, error)
 	mustEmbedUnimplementedChordServer()
 }
 
@@ -156,6 +189,15 @@ func (UnimplementedChordServer) CreateRing(context.Context, *CreateRingRequest) 
 }
 func (UnimplementedChordServer) JoinRing(context.Context, *JoinRingRequest) (*JoinRingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinRing not implemented")
+}
+func (UnimplementedChordServer) Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Stabilize not implemented")
+}
+func (UnimplementedChordServer) GetPredecessor(context.Context, *GetPredecessorRequest) (*GetPredecessorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPredecessor not implemented")
+}
+func (UnimplementedChordServer) Notify(context.Context, *NotifyRequest) (*NotifyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Notify not implemented")
 }
 func (UnimplementedChordServer) mustEmbedUnimplementedChordServer() {}
 
@@ -314,6 +356,60 @@ func _Chord_JoinRing_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chord_Stabilize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StabilizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).Stabilize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/Stabilize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).Stabilize(ctx, req.(*StabilizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chord_GetPredecessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPredecessorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).GetPredecessor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/GetPredecessor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).GetPredecessor(ctx, req.(*GetPredecessorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chord_Notify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).Notify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/Notify",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).Notify(ctx, req.(*NotifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Chord_ServiceDesc is the grpc.ServiceDesc for Chord service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -352,6 +448,18 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JoinRing",
 			Handler:    _Chord_JoinRing_Handler,
+		},
+		{
+			MethodName: "Stabilize",
+			Handler:    _Chord_Stabilize_Handler,
+		},
+		{
+			MethodName: "GetPredecessor",
+			Handler:    _Chord_GetPredecessor_Handler,
+		},
+		{
+			MethodName: "Notify",
+			Handler:    _Chord_Notify_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

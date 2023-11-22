@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
+	"time"
 
 	"github.com/ssjh23/chord-go/gapi"
 	"github.com/ssjh23/chord-go/pb"
@@ -39,6 +41,15 @@ func runGrpcServer(config util.Config) {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	fmt.Printf("Start gRPC server on %s\n", listener.Addr().String())
+
+	go func() {
+		for {
+			time.Sleep(5 * time.Second)
+			if config.SuccessorAddress != "nil" {
+				server.Stabilize(context.Background(), &pb.StabilizeRequest{IpAddress: ""})
+			}
+		}
+	}()
 	err = grpcServer.Serve(listener)
 	if err != nil {
 		log.Fatalf("failed to serve: %v", err)
