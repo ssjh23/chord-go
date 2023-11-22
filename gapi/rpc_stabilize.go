@@ -23,7 +23,10 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	// Ask node to for its predecessor
 	successorResp, err := successor.GetPredecessor(ctx, &pb.GetPredecessorRequest{IpAddress: ""})
 	successorPredecessor := successorResp.PredecessorAddress
-
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
 	m := 6
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 	successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)

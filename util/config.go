@@ -1,6 +1,10 @@
 package util
 
-import "github.com/spf13/viper"
+import (
+	"log"
+
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	SuccessorAddress   string `mapstructure:"SUCCESSOR_ADDRESS"`
@@ -19,5 +23,18 @@ func LoadConfig(path string) (config Config, err error) {
 		return
 	}
 	err = viper.Unmarshal(&config)
+	return
+}
+
+func ChangeEnvVariable(path string, variableName string, newValue string) (config Config, err error) {
+	viper.AddConfigPath(path)
+	viper.SetConfigName("app")
+	viper.SetConfigType("env")
+	viper.AutomaticEnv()
+	err = viper.ReadInConfig()
+	viper.Set(variableName, newValue)
+	if err := viper.WriteConfig(); err != nil {
+		log.Fatal("Error writing to app.env file")
+	}
 	return
 }

@@ -46,6 +46,10 @@ func runGrpcServer(config util.Config) {
 	go func() {
 		for {
 			time.Sleep(5 * time.Second)
+			// config, err := util.LoadConfig(".")
+			// if err != nil {
+			// 	log.Fatalf("failed to load config: %v", err)
+			// }
 			if config.SuccessorAddress != "nil" { // to prevent uninitialised nodes from being called
 				server.Stabilize(context.Background(), &pb.StabilizeRequest{IpAddress: ""})
 			}

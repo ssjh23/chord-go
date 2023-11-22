@@ -51,8 +51,10 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 	log.Printf("Successor Predecessor Updated: %s", successorPredecessor)
 
 	n.Node.predecessorAddress = "nil"
-	os.
-		resp := &pb.JoinRingResponse{
+
+	// util.ChangeEnvVariable(".", "SUCCESSOR_ADDRESS", n.Node.successorAddress)
+
+	resp := &pb.JoinRingResponse{
 		HashedID:           myHashedIp,
 		Address:            n.Node.myIpAddress,
 		SuccessorAddress:   n.Node.successorAddress,
