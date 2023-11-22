@@ -6,15 +6,18 @@ option go_package = "github.com/ssjh23/chord-go/pb";
 
 message Finger {
     int64 key = 1;
-    int64 nodeAddr = 2;
+    string node_address = 2;
 }
 
 message Node {
-    int64 id = 1;
-    string ip = 2;
-    int64 port = 3;
+    string my_ip_address = 1;
+    string successor_address = 2;
+    string precedessor_address = 3;
     repeated Finger fTable = 4;
-    repeated int64 keys = 5;
-    Node successor = 6;
-    Node predecessor = 7;
+    map<string, string> data = 5;
 }
+
+// message Message {
+//     string message_type = 1;
+//     map<string, string> data = 2;
+// }

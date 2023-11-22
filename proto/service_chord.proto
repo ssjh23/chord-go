@@ -10,5 +10,9 @@ import "finger_table.proto";
 service Chord {
     rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
     rpc RequestFromClient (GetRequestFromClient) returns (GetResponseToClient) {}
-    rpc FindSuccessor (FindSuccessorRequest) returns (google.protobuf.Empty) {}
-}
+    rpc FindSuccessor (FindSuccessorRequest) returns (FindSuccessorResponse) {}
+    // rpc for external client to insert or retrieve a key-value pair into the DHT
+    rpc ClientRequestHandler (ClientRequest) returns (ClientResponse) {}
+    rpc InsertKeyValuePair (InsertKeyValuePairRequest) returns (InsertKeyValuePairResponse) {}
+    rpc GetValueFromKey (GetValueFromKeyRequest) returns (GetValueFromKeyResponse) {}
+}   
