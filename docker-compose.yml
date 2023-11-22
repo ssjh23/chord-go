@@ -46,3 +46,25 @@ services:
       - SERVER_ADDRESS=chord-go-chord4-1:9094
       - PREDECESSOR_ADDRESS=chord-go-chord3-1:9093
     command:  [ "/app/main"]
+
+  chord5: 
+    image: chord
+    ports:
+      - "9095:9095"
+    environment:
+      - CHORD_ID=5
+      - SUCCESSOR_ADDRESS=
+      - SERVER_ADDRESS=chord-go-chord5-1:9095
+      - PREDECESSOR_ADDRESS=
+    command:  [ "/app/main"]
+
+  chord6: 
+    image: chord
+    ports:
+      - "9096:9096"
+    environment:
+      - CHORD_ID=6
+      - SUCCESSOR_ADDRESS=
+      - SERVER_ADDRESS=chord-go-chord6-1:9096
+      - PREDECESSOR_ADDRESS=
+    command:  [ "/app/main"]

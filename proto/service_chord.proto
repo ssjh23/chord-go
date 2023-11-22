@@ -15,4 +15,8 @@ service Chord {
     rpc ClientRequestHandler (ClientRequest) returns (ClientResponse) {}
     rpc InsertKeyValuePair (InsertKeyValuePairRequest) returns (InsertKeyValuePairResponse) {}
     rpc GetValueFromKey (GetValueFromKeyRequest) returns (GetValueFromKeyResponse) {}
+    rpc CreateRing (CreateRingRequest) returns (CreateRingResponse){}
+    rpc JoinRing (JoinRingRequest) returns (JoinRingResponse){}
+    // rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
+    // rpc Notify (NotifyRequest) returns (NotifyResponse){}
 }   

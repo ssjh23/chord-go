@@ -38,7 +38,7 @@ func runGrpcServer(config util.Config) {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	fmt.Printf("Start gRPC server on %s", listener.Addr().String())
+	fmt.Printf("Start gRPC server on %s\n", listener.Addr().String())
 	err = grpcServer.Serve(listener)
 	if err != nil {
 		log.Fatalf("failed to serve: %v", err)

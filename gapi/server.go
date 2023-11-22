@@ -37,24 +37,23 @@ func NewServer(config util.Config) (*Server, error) {
 
 func InitNode(config util.Config) (Node, error) {
 	// create a new node
-	fmt.Println("Initialising a new node...")
+	fmt.Println("Initialising a new node...\n")
 	node := Node{
-		myIpAddress:        config.ServerAddress,
-		fTable:             []*Finger{},
-		data:               map[string]string{},
-		successorAddress:   config.SuccessorAddress,
-		predecessorAddress: config.PredecessorAddress,
+		myIpAddress: config.ServerAddress,
+		fTable:      []*Finger{},
+		data:        map[string]string{},
+		// successorAddress:   config.SuccessorAddress,
+		// predecessorAddress: config.PredecessorAddress,
 	}
 
 	populateFingerTables(&node)
 
 	return node, nil
-
 }
 
 func populateFingerTables(node *Node) {
 	// populate finger tables
-	fmt.Println("Populating finger tables...")
+	fmt.Println("Populating finger tables...\n")
 	// for i := 0; i < m; i++ {
 	// k := (nodeIdentifier + int64(math.Pow(2, float64(i)))) % int64(math.Pow(2, float64(m)))
 	// 	nodeIdentifier := Sha1Modulo(node.myIpAddress, m)
