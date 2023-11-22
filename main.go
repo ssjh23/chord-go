@@ -42,10 +42,11 @@ func runGrpcServer(config util.Config) {
 	}
 	fmt.Printf("Start gRPC server on %s\n", listener.Addr().String())
 
+	// Periodically call stabalize
 	go func() {
 		for {
 			time.Sleep(5 * time.Second)
-			if config.SuccessorAddress != "nil" {
+			if config.SuccessorAddress != "nil" { // to prevent uninitialised nodes from being called
 				server.Stabilize(context.Background(), &pb.StabilizeRequest{IpAddress: ""})
 			}
 		}

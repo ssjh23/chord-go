@@ -39,17 +39,20 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn2.Close()
-	c2 := pb.NewChordClient(conn2)
-	// Ask node to find successor using ip address
-	updatePredecessorMessage := &pb.GetPredecessorRequest{IpAddress: n.Node.myIpAddress}
-	updatePredecessorResponse, _ := c2.GetPredecessor(ctx, updatePredecessorMessage)
-	if updatePredecessorResponse.PredecessorAddress == n.Node.myIpAddress {
-		log.Printf("SuccessorPredecessor Updated")
+	successor := pb.NewChordClient(conn2)
+
+	// Ask node to run notify and update its predecessor
+	log.Printf("My sucessor IP Updated: %s", n.Node.successorAddress)
+	successorResp, err := successor.Notify(ctx, &pb.NotifyRequest{IpAddress: n.Node.myIpAddress})
+	if err != nil {
+		log.Fatalf("Fail to notify: %v", err)
 	}
+	successorPredecessor := successorResp.PredecessorAddress
+	log.Printf("Successor Predecessor Updated: %s", successorPredecessor)
 
 	n.Node.predecessorAddress = "nil"
-
-	resp := &pb.JoinRingResponse{
+	os.
+		resp := &pb.JoinRingResponse{
 		HashedID:           myHashedIp,
 		Address:            n.Node.myIpAddress,
 		SuccessorAddress:   n.Node.successorAddress,
