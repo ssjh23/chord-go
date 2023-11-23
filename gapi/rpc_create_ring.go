@@ -21,11 +21,15 @@ func (n *Server) CreateRing(ctx context.Context, req *pb.CreateRingRequest) (*pb
 	n.Node.predecessorAddress = "nil"
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 
+	// JUST ADDED TO POPULATE MY PREDECESSOR
+	n.Stabilize(ctx, &pb.StabilizeRequest{IpAddress: n.Node.myIpAddress})
+
 	resp := &pb.CreateRingResponse{
 		HashedID:           myHashedIp,
 		Address:            n.Node.myIpAddress,
 		SuccessorAddress:   n.Node.successorAddress,
 		PredecessorAddress: n.Node.predecessorAddress,
 	}
+
 	return resp, nil
 }

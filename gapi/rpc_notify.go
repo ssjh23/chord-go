@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"math"
 
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc/codes"
@@ -18,12 +19,20 @@ func (n *Server) Notify(ctx context.Context, req *pb.NotifyRequest) (*pb.NotifyR
 	} else {
 		m := 6
 		myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
-		predecessoressorHashedIP := Sha1Modulo(n.Node.predecessorAddress, m)
+		myPredecessorHashedIp := Sha1Modulo(n.Node.predecessorAddress, m)
 		new_predecessorHashedIp := Sha1Modulo(req.GetIpAddress(), m)
 
-		if n.Node.predecessorAddress == "nil" || (predecessoressorHashedIP < new_predecessorHashedIp && new_predecessorHashedIp < myHashedIp) {
+		if n.Node.predecessorAddress == "nil" || (myPredecessorHashedIp < new_predecessorHashedIp && new_predecessorHashedIp < myHashedIp) {
 			n.Node.predecessorAddress = req.GetIpAddress()
 			log.Printf("Predecessor Updated: %s\n", n.Node.predecessorAddress)
+		}
+
+		// handling edge case: in between "start" & "end" of ring
+		if myPredecessorHashedIp > myHashedIp {
+			if (new_predecessorHashedIp > myPredecessorHashedIp && new_predecessorHashedIp <= int64(math.Pow(float64(2), float64(m)))) || (new_predecessorHashedIp >= 0 && new_predecessorHashedIp < myHashedIp) {
+				n.Node.predecessorAddress = req.GetIpAddress()
+				log.Printf("Predecessor Updated: %s\n", n.Node.predecessorAddress)
+			}
 		}
 	}
 	resp := &pb.NotifyResponse{

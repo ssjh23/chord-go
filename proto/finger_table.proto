@@ -43,3 +43,10 @@ message GetValueFromKeyResponse {
     string value = 1;
 }
 
+message FixFingerTableRequest {
+    string key = 1;
+}
+
+message FixFingerTableResponse {
+    string ip_address = 1;
+}

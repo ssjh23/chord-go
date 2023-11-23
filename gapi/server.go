@@ -2,6 +2,7 @@ package gapi
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/ssjh23/chord-go/pb"
 	"github.com/ssjh23/chord-go/util"
@@ -51,52 +52,63 @@ func InitNode(config util.Config) (Node, error) {
 	return node, nil
 }
 
+func (n *Node) fixFingers() {
+	for i := 0; i < m; i++ {
+		// myHashedIp := Sha1Modulo(n.myIpAddress, m)
+		// k := (myHashedIp + int64(math.Pow(2, float64(i)))) % int64(math.Pow(2, float64(m)))
+
+		// do an rpc call to find successor of k
+
+		// n.fTable[i].NodeAddress =
+	}
+	fmt.Println("Fingers fixed!")
+}
+
 func populateFingerTables(node *Node) {
 	// populate finger tables
 	fmt.Println("Populating finger tables...\n")
-	// for i := 0; i < m; i++ {
-	// k := (nodeIdentifier + int64(math.Pow(2, float64(i)))) % int64(math.Pow(2, float64(m)))
-	// 	nodeIdentifier := Sha1Modulo(node.myIpAddress, m)
-	// 	node.fTable = append(node.fTable, &Finger{key: k, NodeAddress: node.myIpAddress})
-	// 	fmt.Printf("Finger table %d: %v \n", i, node.fTable[i])
-	// }
-
-	// hardcode finger tables
-	// for i := 0; i < m; i++ {
-	ip := node.myIpAddress
-	if ip == "chord-go-chord1-1:9091" {
-		node.fTable = append(node.fTable, &Finger{key: 7, NodeAddress: "chord-go-chord3-1:9093"})
-		node.fTable = append(node.fTable, &Finger{key: 8, NodeAddress: "chord-go-chord3-1:9093"})
-		node.fTable = append(node.fTable, &Finger{key: 10, NodeAddress: "chord-go-chord3-1:9093"})
-		node.fTable = append(node.fTable, &Finger{key: 14, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 22, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 38, NodeAddress: "chord-go-chord4-1:9094"})
-	} else if ip == "chord-go-chord2-1:9092" {
-		node.fTable = append(node.fTable, &Finger{key: 30, NodeAddress: "chord-go-chord4-1:9094"})
-		node.fTable = append(node.fTable, &Finger{key: 31, NodeAddress: "chord-go-chord4-1:9094"})
-		node.fTable = append(node.fTable, &Finger{key: 33, NodeAddress: "chord-go-chord4-1:9094"})
-		node.fTable = append(node.fTable, &Finger{key: 37, NodeAddress: "chord-go-chord4-1:9094"})
-		node.fTable = append(node.fTable, &Finger{key: 45, NodeAddress: "chord-go-chord4-1:9094"})
-		node.fTable = append(node.fTable, &Finger{key: 61, NodeAddress: "chord-go-chord1-1:9091"})
-	} else if ip == "chord-go-chord3-1:9093" {
-		node.fTable = append(node.fTable, &Finger{key: 12, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 13, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 15, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 19, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 27, NodeAddress: "chord-go-chord2-1:9092"})
-		node.fTable = append(node.fTable, &Finger{key: 43, NodeAddress: "chord-go-chord4-1:9094"})
-	} else if ip == "chord-go-chord4-1:9094" {
-		node.fTable = append(node.fTable, &Finger{key: 50, NodeAddress: "chord-go-chord1-1:9091"})
-		node.fTable = append(node.fTable, &Finger{key: 51, NodeAddress: "chord-go-chord1-1:9091"})
-		node.fTable = append(node.fTable, &Finger{key: 53, NodeAddress: "chord-go-chord1-1:9091"})
-		node.fTable = append(node.fTable, &Finger{key: 57, NodeAddress: "chord-go-chord1-1:9091"})
-		node.fTable = append(node.fTable, &Finger{key: 1, NodeAddress: "chord-go-chord1-1:9091"})
-		node.fTable = append(node.fTable, &Finger{key: 17, NodeAddress: "chord-go-chord3-1:9093"})
-	} else {
-		fmt.Println("ERROR: node.myIpAddress is not chord-go-chord1-1:9091, chord-go-chord2-1:9092, chord-go-chord3-1:9093, chord-go-chord4-1:9094")
+	for i := 0; i < m; i++ {
+		myHashedIp := Sha1Modulo(node.myIpAddress, m)
+		k := (myHashedIp + int64(math.Pow(2, float64(i)))) % int64(math.Pow(2, float64(m)))
+		node.fTable = append(node.fTable, &Finger{key: k, NodeAddress: node.myIpAddress})
+		fmt.Printf("Finger table %d: %v \n", i, node.fTable[i])
 	}
 
-	fmt.Printf("Finger table: %v \n", node.fTable)
+	// hardcode finger tables
+	// ip := node.myIpAddress
+	// if ip == "chord-go-chord1-1:9091" {
+	// 	node.fTable = append(node.fTable, &Finger{key: 7, NodeAddress: "chord-go-chord3-1:9093"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 8, NodeAddress: "chord-go-chord3-1:9093"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 10, NodeAddress: "chord-go-chord3-1:9093"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 14, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 22, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 38, NodeAddress: "chord-go-chord4-1:9094"})
+	// } else if ip == "chord-go-chord2-1:9092" {
+	// 	node.fTable = append(node.fTable, &Finger{key: 30, NodeAddress: "chord-go-chord4-1:9094"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 31, NodeAddress: "chord-go-chord4-1:9094"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 33, NodeAddress: "chord-go-chord4-1:9094"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 37, NodeAddress: "chord-go-chord4-1:9094"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 45, NodeAddress: "chord-go-chord4-1:9094"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 61, NodeAddress: "chord-go-chord1-1:9091"})
+	// } else if ip == "chord-go-chord3-1:9093" {
+	// 	node.fTable = append(node.fTable, &Finger{key: 12, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 13, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 15, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 19, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 27, NodeAddress: "chord-go-chord2-1:9092"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 43, NodeAddress: "chord-go-chord4-1:9094"})
+	// } else if ip == "chord-go-chord4-1:9094" {
+	// 	node.fTable = append(node.fTable, &Finger{key: 50, NodeAddress: "chord-go-chord1-1:9091"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 51, NodeAddress: "chord-go-chord1-1:9091"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 53, NodeAddress: "chord-go-chord1-1:9091"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 57, NodeAddress: "chord-go-chord1-1:9091"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 1, NodeAddress: "chord-go-chord1-1:9091"})
+	// 	node.fTable = append(node.fTable, &Finger{key: 17, NodeAddress: "chord-go-chord3-1:9093"})
+	// } else {
+	// 	fmt.Println("ERROR: node.myIpAddress is not chord-go-chord1-1:9091, chord-go-chord2-1:9092, chord-go-chord3-1:9093, chord-go-chord4-1:9094")
+	// }
+
+	// fmt.Printf("Finger table: %v \n", node.fTable)
 	// }
 
 }

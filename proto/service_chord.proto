@@ -20,4 +20,5 @@ service Chord {
     rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
     rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
     rpc Notify (NotifyRequest) returns (NotifyResponse){}
+    rpc FixFingerTable (FixFingerTableRequest) returns (FixFingerTableResponse){}
 }   

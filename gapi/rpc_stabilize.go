@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"math"
 
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
@@ -35,16 +36,23 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	log.Printf("successor haship: %+v", successorHashedIP)
 	log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
 
+	// handling edge case: in between "start" & "end" of ring
+	if myHashedIp > successorHashedIP {
+		if (successorpredecessorHashedIp > myHashedIp && successorpredecessorHashedIp <= int64(math.Pow(float64(2), float64(m)))) || (successorpredecessorHashedIp >= 0 && successorpredecessorHashedIp < successorHashedIP) {
+			n.Node.successorAddress = successorPredecessor
+		}
+	}
+
 	if myHashedIp < successorpredecessorHashedIp && successorpredecessorHashedIp < successorHashedIP {
-		// update new successor
+		// update new successors
 		log.Printf("i entered\n")
 
 		n.Node.successorAddress = successorPredecessor
-	} else if myHashedIp > successorpredecessorHashedIp && successorpredecessorHashedIp > successorHashedIP {
-		// update new successor
-		log.Printf("i entered there\n")
+		// } else if myHashedIp > successorpredecessorHashedIp && successorpredecessorHashedIp > successorHashedIP {
+		// 	// update new successor
+		// 	log.Printf("i entered there\n")
 
-		n.Node.successorAddress = successorPredecessor
+		// 	n.Node.successorAddress = successorPredecessor
 	}
 
 	// connect to new successor Node to run notify
