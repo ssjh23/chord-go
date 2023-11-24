@@ -23,18 +23,23 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 
 	// Ask node to for its predecessor
 	successorResp, err := successor.GetPredecessor(ctx, &pb.GetPredecessorRequest{IpAddress: ""})
-	successorPredecessor := successorResp.PredecessorAddress
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
+	successorPredecessor := successorResp.PredecessorAddress
 	defer conn.Close()
 	m := 6
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 	successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)
 	successorpredecessorHashedIp := Sha1Modulo(successorPredecessor, m)
-	log.Printf("My haship: %+v", myHashedIp)
-	log.Printf("successor haship: %+v", successorHashedIP)
-	log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
+	// log.Printf("My hashed IP: %+v", myHashedIp)
+	// log.Printf("successor haship: %+v", successorHashedIP)
+	// log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
+
+	// handling edge case: i am my own successor
+	if myHashedIp == successorHashedIP {
+		n.Node.successorAddress = successorPredecessor
+	}
 
 	// handling edge case: in between "start" & "end" of ring
 	if myHashedIp > successorHashedIP {
@@ -68,10 +73,10 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	log.Printf("My sucessor IP Updated: %s", n.Node.successorAddress)
 	new_successorResp, err := new_successor.Notify(ctx, &pb.NotifyRequest{IpAddress: n.Node.myIpAddress})
 	if err != nil {
-		log.Fatalf("Fail to notify: %v", err)
+		log.Fatalf("%v Fail to notify: %v", new_successorResp, err)
 	}
-	new_successorPredecessor := new_successorResp.PredecessorAddress
-	log.Printf("Successor Predecessor Updated: %s", new_successorPredecessor)
+	// new_successorPredecessor := new_successorResp.PredecessorAddress
+	// log.Printf("Successor Predecessor Updated: %s", new_successorPredecessor)
 
 	resp := &pb.StabilizeResponse{
 		SuccessorAddress: n.Node.successorAddress,

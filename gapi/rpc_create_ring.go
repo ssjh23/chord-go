@@ -18,7 +18,7 @@ func (n *Server) CreateRing(ctx context.Context, req *pb.CreateRingRequest) (*pb
 	m := 6
 
 	n.Node.successorAddress = n.Node.myIpAddress
-	n.Node.predecessorAddress = "nil"
+	n.Node.predecessorAddress = n.Node.myIpAddress
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 
 	// JUST ADDED TO POPULATE MY PREDECESSOR

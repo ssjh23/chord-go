@@ -43,8 +43,8 @@ func InitNode(config util.Config) (Node, error) {
 		myIpAddress:        config.ServerAddress,
 		fTable:             []*Finger{},
 		data:               map[string]string{},
-		successorAddress:   config.SuccessorAddress,
-		predecessorAddress: config.PredecessorAddress,
+		successorAddress:   config.ServerAddress,
+		predecessorAddress: config.ServerAddress,
 	}
 
 	populateFingerTables(&node)
@@ -52,17 +52,6 @@ func InitNode(config util.Config) (Node, error) {
 	return node, nil
 }
 
-func (n *Node) fixFingers() {
-	for i := 0; i < m; i++ {
-		// myHashedIp := Sha1Modulo(n.myIpAddress, m)
-		// k := (myHashedIp + int64(math.Pow(2, float64(i)))) % int64(math.Pow(2, float64(m)))
-
-		// do an rpc call to find successor of k
-
-		// n.fTable[i].NodeAddress =
-	}
-	fmt.Println("Fingers fixed!")
-}
 
 func populateFingerTables(node *Node) {
 	// populate finger tables

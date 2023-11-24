@@ -7,6 +7,7 @@ import (
 	"log"
 	"math"
 	"math/big"
+	"strconv"
 
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
@@ -34,13 +35,27 @@ func Sha1Modulo(inputString string, m int) int64 {
 
 func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest) (*pb.FindSuccessorResponse, error) {
 
-	log.Printf("STARTING FIND SUCCESSOR: %s", n.config.ServerAddress)
+	// log.Printf("STARTING FIND SUCCESSOR: %s", n.config.ServerAddress)
 
 	// hashing the key
-	hashedKey := Sha1Modulo(req.GetRequestedKey(), m)
+	hashedKey, _ := strconv.ParseInt(req.GetRequestedKey(), 10, 64)
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 	mySuccessorHashedIp := Sha1Modulo(n.Node.successorAddress, m)
 	myPredecessorHashedIp := Sha1Modulo(n.Node.predecessorAddress, m)
+
+	// if i am the only one in the network, return me
+	if myPredecessorHashedIp == myHashedIp && mySuccessorHashedIp == myHashedIp {
+		resp := &pb.FindSuccessorResponse{
+			SuccessorAddress: n.Node.myIpAddress,
+		}
+		log.Printf("YOUR KEY IS LOCATED AT PORT 1: %s", resp.SuccessorAddress)
+		return resp, nil
+	}
+
+	// if there are only 2 nodes in the network:
+	// if myPredecessorHashedIp == mySuccessorHashedIp && myHashedIp != myPredecessorHashedIp && myHashedIp != mySuccessorHashedIp{
+	// 	if
+	// }
 
 	// if my predecessor is higher than me, check if hashed key is between my predecessor to 2**m, or 0 and me, then i'm the successor
 	if myPredecessorHashedIp > myHashedIp {
@@ -48,7 +63,18 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 			resp := &pb.FindSuccessorResponse{
 				SuccessorAddress: n.Node.myIpAddress,
 			}
-			log.Printf("YOUR KEY IS LOCATED AT PORT: %s", resp.SuccessorAddress)
+			log.Printf("YOUR KEY IS LOCATED AT PORT 2: %s", resp.SuccessorAddress)
+			return resp, nil
+		}
+	}
+
+	// if my successor is lower than me, check if hashed key is between me to 2**m or 0 and my successor, then my successor is the successor
+	if mySuccessorHashedIp < myHashedIp {
+		if (hashedKey > myHashedIp && hashedKey <= int64(math.Pow(float64(2), float64(m)))) || (hashedKey >= 0 && hashedKey <= mySuccessorHashedIp) {
+			resp := &pb.FindSuccessorResponse{
+				SuccessorAddress: n.Node.successorAddress,
+			}
+			log.Printf("YOUR KEY, %v IS LOCATED AT PORT 3: %s", hashedKey, resp.SuccessorAddress)
 			return resp, nil
 		}
 	}
@@ -59,7 +85,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.myIpAddress,
 		}
-		log.Printf("YOUR KEY IS LOCATED AT PORT: %s", resp.SuccessorAddress)
+		log.Printf("YOUR KEY, %v IS LOCATED AT PORT 4: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
 	// if the key is between my sucessor and me, then my successor the successor
@@ -68,11 +94,36 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.successorAddress,
 		}
-		log.Printf("YOUR KEY IS LOCATED AT PORT: %s", resp.SuccessorAddress)
+		log.Printf("YOUR KEY, %v IS LOCATED AT PORT 5: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
+
+	// // SUPER SUS....
+	// if hashedKey < myPredecessorHashedIp {
+
+	// }
+
 	// else, find the closest preceding node
 	nextNodeAddress := n.ClosestPrecedingNode(hashedKey)
+
+	// if by now the closest preceding node is me, my fTable is wrong.
+	if nextNodeAddress == n.Node.myIpAddress {
+		conn, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		if err != nil {
+			log.Fatalf("did not connect: %v", err)
+		}
+		defer conn.Close()
+		nextNode := pb.NewChordClient(conn)
+		nextNodeResp, err := nextNode.FindSuccessor(ctx, &pb.FindSuccessorRequest{RequestedKey: req.GetRequestedKey()})
+		if err != nil {
+			log.Fatalf("could not get chord response: %v", err)
+		}
+		resp := &pb.FindSuccessorResponse{
+			SuccessorAddress: nextNodeResp.SuccessorAddress,
+		}
+		// log.Printf("The successor is: %s", nextNodeResp.SuccessorAddress)
+		return resp, err
+	}
 
 	conn, err := grpc.Dial(nextNodeAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -88,7 +139,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 	resp := &pb.FindSuccessorResponse{
 		SuccessorAddress: nextNodeResp.SuccessorAddress,
 	}
-	log.Printf("The successor is: %s", nextNodeResp.SuccessorAddress)
+	// log.Printf("The successor is: %s", nextNodeResp.SuccessorAddress)
 	return resp, err
 }
 

@@ -7,10 +7,10 @@ import (
 )
 
 type Config struct {
-	SuccessorAddress   string `mapstructure:"SUCCESSOR_ADDRESS"`
-	ServerAddress      string `mapstructure:"SERVER_ADDRESS"`
-	PredecessorAddress string `mapstructure:"PREDECESSOR_ADDRESS"`
-	ChordId            string `mapstructure:"CHORD_ID"`
+	SuccessorAddress string `mapstructure:"SUCCESSOR_ADDRESS"`
+	ServerAddress    string `mapstructure:"SERVER_ADDRESS"`
+	// PredecessorAddress string `mapstructure:"PREDECESSOR_ADDRESS"`
+	ChordId string `mapstructure:"CHORD_ID"`
 }
 
 func LoadConfig(path string) (config Config, err error) {

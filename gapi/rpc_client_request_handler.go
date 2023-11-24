@@ -3,6 +3,7 @@ package gapi
 import (
 	"context"
 	"log"
+	"strconv"
 
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
@@ -15,7 +16,8 @@ func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRe
 	if (req.GetRequestType() != "GET" && req.GetRequestType() != "INSERT") || req.GetRequestedKey() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty")
 	}
-	findSuccessorMessage := &pb.FindSuccessorRequest{RequestedKey: req.GetRequestedKey()}
+	hashedKey := Sha1Modulo(req.GetRequestedKey(), m)
+	findSuccessorMessage := &pb.FindSuccessorRequest{RequestedKey: strconv.FormatInt(hashedKey, 10)}
 	successorResponse, _ := server.FindSuccessor(ctx, findSuccessorMessage)
 
 	if req.GetRequestType() == "GET" {
