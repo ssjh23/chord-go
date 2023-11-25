@@ -15,8 +15,8 @@ func (server *Server) RequestFromClient(ctx context.Context, req *pb.GetRequestF
 	if req.GetInput() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty")
 	}
-	log.Printf("Server Address: %s", server.config.ServerAddress)
-	log.Printf("Successor Address: %s", server.config.SuccessorAddress)
+	log.Printf("Server Address: %s", server.Node.myIpAddress)
+	log.Printf("Successor Address: %s", server.Node.successorAddress)
 	conn, err := grpc.Dial(server.config.SuccessorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -29,9 +29,9 @@ func (server *Server) RequestFromClient(ctx context.Context, req *pb.GetRequestF
 	}
 	resp := &pb.GetResponseToClient{
 		InputFromClient: req.GetInput(),
-		Id: chordResp.GetId(),
-		Ip: chordResp.GetIp(),
-		Port: chordResp.GetPort(),
+		Id:              chordResp.GetId(),
+		Ip:              chordResp.GetIp(),
+		Port:            chordResp.GetPort(),
 	}
 	return resp, nil
 }

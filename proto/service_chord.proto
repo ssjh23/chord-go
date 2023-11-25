@@ -5,8 +5,20 @@ package pb;
 option go_package = "github.com/ssjh23/chord-go/pb";
 
 import "rpc_test.proto";
+import "finger_table.proto";
 
 service Chord {
     rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
     rpc RequestFromClient (GetRequestFromClient) returns (GetResponseToClient) {}
-}
+    rpc FindSuccessor (FindSuccessorRequest) returns (FindSuccessorResponse) {}
+    // rpc for external client to insert or retrieve a key-value pair into the DHT
+    rpc ClientRequestHandler (ClientRequest) returns (ClientResponse) {}
+    rpc InsertKeyValuePair (InsertKeyValuePairRequest) returns (InsertKeyValuePairResponse) {}
+    rpc GetValueFromKey (GetValueFromKeyRequest) returns (GetValueFromKeyResponse) {}
+    rpc CreateRing (CreateRingRequest) returns (CreateRingResponse){}
+    rpc JoinRing (JoinRingRequest) returns (JoinRingResponse){}
+    rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
+    rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
+    rpc Notify (NotifyRequest) returns (NotifyResponse){}
+    rpc FixFingerTable (FixFingerTableRequest) returns (FixFingerTableResponse){}
+}   

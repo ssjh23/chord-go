@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/ssjh23/chord-go/pb";
+
+// import "chord.proto";
+
+message FindSuccessorRequest{
+    string requested_key = 2;
+}
+
+message FindSuccessorResponse{
+    string successor_address = 1;
+}
+
+message ClientRequest{
+    string request_type = 2;
+    string requested_key = 3;
+    string value = 4;
+}
+
+message ClientResponse{
+    string request_type = 2;
+    string requested_key = 3;
+    string value = 4;
+}
+
+message InsertKeyValuePairRequest {
+    string key = 1;
+    string value = 2;
+}
+
+message InsertKeyValuePairResponse {
+    string message = 1;
+}
+
+message GetValueFromKeyRequest {
+    string key = 1;
+}
+
+message GetValueFromKeyResponse {
+    string value = 1;
+}
+
+message FixFingerTableRequest {
+    string key = 1;
+}
+
+message FixFingerTableResponse {
+    string ip_address = 1;
+}
