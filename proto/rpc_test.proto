@@ -70,3 +70,9 @@ message NotifyRequest{
 message NotifyResponse{
     string predecessor_address = 1;
 }
+
+message CheckPredecessorRequest{
+}
+
+message CheckPredecessorResponse{
+}

@@ -16,8 +16,8 @@ func (server *Server) GetChordNode(ctx context.Context, req *pb.GetChordNodeRequ
 	}
 
 	resp := &pb.GetChordNodeResponse{
-		Id: server.config.ChordId,
-		Ip: "test",
+		Id:   server.config.ChordId,
+		Ip:   "test",
 		Port: 9090,
 	}
 	return resp, nil
