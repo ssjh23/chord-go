@@ -14,7 +14,8 @@ func (s *Server) GetValueFromKey(ctx context.Context, req *pb.GetValueFromKeyReq
 	}
 	value := s.Node.data[req.GetKey()]
 	resp := &pb.GetValueFromKeyResponse{
-		Value: value,
+		Value:         value,
+		RetrievedFrom: s.Node.myIpAddress,
 	}
 	return resp, nil
 }

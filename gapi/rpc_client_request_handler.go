@@ -32,9 +32,10 @@ func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRe
 			log.Fatalf("could not get chord response: %v", err)
 		}
 		resp := &pb.ClientResponse{
-			RequestType:  "Successful GET",
-			RequestedKey: req.GetRequestedKey(),
-			Value:        chordResp.GetValue(),
+			RequestType:   "Successful GET",
+			RequestedKey:  req.GetRequestedKey(),
+			Value:         chordResp.GetValue(),
+			RetrievedFrom: chordResp.GetRetrievedFrom(),
 		}
 		return resp, nil
 	} else {

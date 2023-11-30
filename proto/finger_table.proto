@@ -24,6 +24,7 @@ message ClientResponse{
     string request_type = 2;
     string requested_key = 3;
     string value = 4;
+    string retrieved_from = 5;
 }
 
 message InsertKeyValuePairRequest {
@@ -41,6 +42,7 @@ message GetValueFromKeyRequest {
 
 message GetValueFromKeyResponse {
     string value = 1;
+    string retrieved_from = 2;
 }
 
 message FixFingerTableRequest {

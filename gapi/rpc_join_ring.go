@@ -52,10 +52,13 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 
 	n.Node.predecessorAddress = n.Node.myIpAddress
 
-	// util.ChangeEnvVariable(".", "SUCCESSOR_ADDRESS", n.Node.successorAddress)
-	// JUST ADDED TO POPULATE MY PREDECESSOR
-	// n.Stabilize(ctx, &pb.StabilizeRequest{IpAddress: n.Node.myIpAddress})
+	// update my data based on my successor's data
+	new_data_to_store := successorResp.DataToBeAbsorbed
+	for key, value := range new_data_to_store {
+		n.Node.data[key] = value
+	}
 
+	// JUST ADDED TO POPULATE MY PREDECESSOR
 	resp := &pb.JoinRingResponse{
 		HashedID:           myHashedIp,
 		Address:            n.Node.myIpAddress,
