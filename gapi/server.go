@@ -22,7 +22,7 @@ type Node struct {
 	predecessorAddress string
 	successorList 	   []string
 	data               map[string]string
-
+	replicaData        map[string]map[string]string
 }
 
 type Finger struct {
@@ -44,10 +44,11 @@ func InitNode(config util.Config) (Node, error) {
 	node := Node{
 		myIpAddress:        config.ServerAddress,
 		fTable:             []*Finger{},
-		data:               map[string]string{},
+		data:               map[string]string{"test": "test"},
 		successorAddress:   config.ServerAddress,
 		predecessorAddress: config.ServerAddress,
 		successorList: 	    []string{},
+		replicaData:        map[string]map[string]string{},
 	}
 
 	populateFingerTables(&node)

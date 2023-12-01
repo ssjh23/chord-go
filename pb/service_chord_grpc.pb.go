@@ -36,7 +36,7 @@ type ChordClient interface {
 	Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error)
 	FixFingerTable(ctx context.Context, in *FixFingerTableRequest, opts ...grpc.CallOption) (*FixFingerTableResponse, error)
 	GetSuccessorList(ctx context.Context, in *GetSuccessorListRequest, opts ...grpc.CallOption) (*GetSuccessorListResponse, error)
-	GetReplicateData(ctx context.Context, in *ReplicateDataRequest, opts ...grpc.CallOption) (*ReplicateDataResponse, error)
+	CheckReplicateData(ctx context.Context, in *CheckReplicateDataRequest, opts ...grpc.CallOption) (*CheckReplicateDataResponse, error)
 }
 
 type chordClient struct {
@@ -164,9 +164,9 @@ func (c *chordClient) GetSuccessorList(ctx context.Context, in *GetSuccessorList
 	return out, nil
 }
 
-func (c *chordClient) GetReplicateData(ctx context.Context, in *ReplicateDataRequest, opts ...grpc.CallOption) (*ReplicateDataResponse, error) {
-	out := new(ReplicateDataResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/GetReplicateData", in, out, opts...)
+func (c *chordClient) CheckReplicateData(ctx context.Context, in *CheckReplicateDataRequest, opts ...grpc.CallOption) (*CheckReplicateDataResponse, error) {
+	out := new(CheckReplicateDataResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/CheckReplicateData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +191,7 @@ type ChordServer interface {
 	Notify(context.Context, *NotifyRequest) (*NotifyResponse, error)
 	FixFingerTable(context.Context, *FixFingerTableRequest) (*FixFingerTableResponse, error)
 	GetSuccessorList(context.Context, *GetSuccessorListRequest) (*GetSuccessorListResponse, error)
-	GetReplicateData(context.Context, *ReplicateDataRequest) (*ReplicateDataResponse, error)
+	CheckReplicateData(context.Context, *CheckReplicateDataRequest) (*CheckReplicateDataResponse, error)
 	mustEmbedUnimplementedChordServer()
 }
 
@@ -238,8 +238,8 @@ func (UnimplementedChordServer) FixFingerTable(context.Context, *FixFingerTableR
 func (UnimplementedChordServer) GetSuccessorList(context.Context, *GetSuccessorListRequest) (*GetSuccessorListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSuccessorList not implemented")
 }
-func (UnimplementedChordServer) GetReplicateData(context.Context, *ReplicateDataRequest) (*ReplicateDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetReplicateData not implemented")
+func (UnimplementedChordServer) CheckReplicateData(context.Context, *CheckReplicateDataRequest) (*CheckReplicateDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckReplicateData not implemented")
 }
 func (UnimplementedChordServer) mustEmbedUnimplementedChordServer() {}
 
@@ -488,20 +488,20 @@ func _Chord_GetSuccessorList_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Chord_GetReplicateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReplicateDataRequest)
+func _Chord_CheckReplicateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckReplicateDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChordServer).GetReplicateData(ctx, in)
+		return srv.(ChordServer).CheckReplicateData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/GetReplicateData",
+		FullMethod: "/pb.Chord/CheckReplicateData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChordServer).GetReplicateData(ctx, req.(*ReplicateDataRequest))
+		return srv.(ChordServer).CheckReplicateData(ctx, req.(*CheckReplicateDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -566,8 +566,8 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Chord_GetSuccessorList_Handler,
 		},
 		{
-			MethodName: "GetReplicateData",
-			Handler:    _Chord_GetReplicateData_Handler,
+			MethodName: "CheckReplicateData",
+			Handler:    _Chord_CheckReplicateData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

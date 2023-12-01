@@ -4,10 +4,13 @@ package pb;
 
 option go_package = "github.com/ssjh23/chord-go/pb";
 
-message ReplicateDataRequest {
-    map <string, string> data = 1;
+
+message CheckReplicateDataRequest {
+    string node_address = 1;
+    map <string, string> data = 2;
 }
 
-message ReplicateDataResponse {
-    string resp = 1;
+message CheckReplicateDataResponse {
+    bool replicated = 1;
 }
+

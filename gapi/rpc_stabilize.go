@@ -93,6 +93,9 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	resp := &pb.StabilizeResponse{
 		SuccessorAddress: n.Node.successorAddress,
 	}
+	n.updateReplicasInSuccessors(ctx)
+	// Print out all replica data
+	log.Printf("\nReplica Data: %s", n.Node.replicaData)
 	return resp, nil
 }
 
@@ -138,4 +141,34 @@ func (n *Server)updateSuccessorList(successorList []string, successorAddress str
 		// }
 	}
 	n.Node.successorList = finalSuccessorList
+}
+
+// Helper function to update replicas in all successors in list
+func (n *Server) updateReplicasInSuccessors(ctx context.Context) {
+	// Print successor list in function
+	log.Printf("\nSuccessor List in updateReplicasInSuccessors: %s", n.Node.successorList)
+	// Iterate through the successor list
+	for _, successor := range n.Node.successorList {
+		// If the successor is not the current node, check the replicated data for that successor
+		if successor != n.Node.myIpAddress {
+			// Set up a connection to the successor
+			conn, err := grpc.Dial(successor, grpc.WithTransportCredentials(insecure.NewCredentials()))
+			// Invoke CheckReplicateData RPC
+			if err != nil {
+				log.Fatalf("did not connect: %v", err)
+			}
+			defer conn.Close()
+			successorClient := pb.NewChordClient(conn)
+			// Form the request
+			checkReplicateDataRequest := &pb.CheckReplicateDataRequest{
+				NodeAddress: n.Node.myIpAddress,
+				Data: n.Node.data,
+			}
+			// Invoke CheckReplicateData RPC
+			_, err = successorClient.CheckReplicateData(ctx, checkReplicateDataRequest)
+			if err != nil {
+				log.Fatalf("did not connect: %v", err)
+			}
+		}
+	}
 }
