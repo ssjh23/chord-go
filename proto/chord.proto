@@ -15,6 +15,7 @@ message Node {
     string precedessor_address = 3;
     repeated Finger fTable = 4;
     map<string, string> data = 5;
+    repeated string successor_list = 6;
 }
 
 // message Message {

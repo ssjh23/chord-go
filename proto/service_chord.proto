@@ -6,6 +6,8 @@ option go_package = "github.com/ssjh23/chord-go/pb";
 
 import "rpc_test.proto";
 import "finger_table.proto";
+import "successor_list.proto";
+import "replicator.proto";
 
 service Chord {
     rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
@@ -21,4 +23,6 @@ service Chord {
     rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
     rpc Notify (NotifyRequest) returns (NotifyResponse){}
     rpc FixFingerTable (FixFingerTableRequest) returns (FixFingerTableResponse){}
+    rpc GetSuccessorList(GetSuccessorListRequest) returns (GetSuccessorListResponse){}
+    rpc GetReplicateData(ReplicateDataRequest) returns (ReplicateDataResponse){}
 }   

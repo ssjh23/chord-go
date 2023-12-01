@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var m = 6
+var m = 8
 
 func Sha1Modulo(inputString string, m int) int64 {
 	// Hash the input string using SHA-1
@@ -48,7 +48,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.myIpAddress,
 		}
-		log.Printf("YOUR KEY IS LOCATED AT PORT 1: %s", resp.SuccessorAddress)
+		// log.Printf("YOUR KEY IS LOCATED AT PORT 1: %s", resp.SuccessorAddress)
 		return resp, nil
 	}
 
@@ -63,7 +63,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 			resp := &pb.FindSuccessorResponse{
 				SuccessorAddress: n.Node.myIpAddress,
 			}
-			log.Printf("YOUR KEY IS LOCATED AT PORT 2: %s", resp.SuccessorAddress)
+			// log.Printf("YOUR KEY IS LOCATED AT PORT 2: %s", resp.SuccessorAddress)
 			return resp, nil
 		}
 	}
@@ -74,7 +74,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 			resp := &pb.FindSuccessorResponse{
 				SuccessorAddress: n.Node.successorAddress,
 			}
-			log.Printf("YOUR KEY, %v IS LOCATED AT PORT 3: %s", hashedKey, resp.SuccessorAddress)
+			// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 3: %s", hashedKey, resp.SuccessorAddress)
 			return resp, nil
 		}
 	}
@@ -85,7 +85,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.myIpAddress,
 		}
-		log.Printf("YOUR KEY, %v IS LOCATED AT PORT 4: %s", hashedKey, resp.SuccessorAddress)
+		// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 4: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
 	// if the key is between my sucessor and me, then my successor the successor
@@ -94,7 +94,7 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.successorAddress,
 		}
-		log.Printf("YOUR KEY, %v IS LOCATED AT PORT 5: %s", hashedKey, resp.SuccessorAddress)
+		// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 5: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
 
