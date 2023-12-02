@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/ssjh23/chord-go/pb";
+
+message GetSuccessorListRequest {
+}
+
+message GetSuccessorListResponse {
+    repeated string successorList = 1;
+}
