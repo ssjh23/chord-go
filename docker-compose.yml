@@ -9,9 +9,7 @@ services:
       - "9091:9091"
     environment:
       - CHORD_ID=1 
-      # - SUCCESSOR_ADDRESS=chord-go-chord3-1:9093
       - SERVER_ADDRESS=chord-go-chord1-1:9091
-      # - PREDECESSOR_ADDRESS=chord-go-chord4-1:9094
     command:  [ "/app/main"]
   
   chord2: 
@@ -20,9 +18,7 @@ services:
       - "9092:9092"
     environment:
       - CHORD_ID=2
-      # - SUCCESSOR_ADDRESS=chord-go-chord4-1:9094
       - SERVER_ADDRESS=chord-go-chord2-1:9092
-      # - PREDECESSOR_ADDRESS=chord-go-chord3-1:9093
     command:  [ "/app/main"]
 
   chord3: 
@@ -31,9 +27,7 @@ services:
       - "9093:9093"
     environment:
       - CHORD_ID=3
-      # - SUCCESSOR_ADDRESS=chord-go-chord2-1:9092 
       - SERVER_ADDRESS=chord-go-chord3-1:9093
-      # - PREDECESSOR_ADDRESS=chord-go-chord1-1:9091
     command:  [ "/app/main"]
 
   chord4: 
@@ -42,9 +36,7 @@ services:
       - "9094:9094"
     environment:
       - CHORD_ID=4
-      # - SUCCESSOR_ADDRESS=chord-go-chord1-1:9091
       - SERVER_ADDRESS=chord-go-chord4-1:9094
-      # - PREDECESSOR_ADDRESS=chord-go-chord2-1:9092
     command:  [ "/app/main"]
 
   chord5: 
@@ -53,9 +45,7 @@ services:
       - "9095:9095"
     environment:
       - CHORD_ID=5
-      # - SUCCESSOR_ADDRESS=nil
       - SERVER_ADDRESS=chord-go-chord5-1:9095
-      # - PREDECESSOR_ADDRESS=nil
     command:  [ "/app/main"]
 
   chord6: 
@@ -64,9 +54,7 @@ services:
       - "9096:9096"
     environment:
       - CHORD_ID=6
-      # - SUCCESSOR_ADDRESS=nil
       - SERVER_ADDRESS=chord-go-chord6-1:9096
-      # - PREDECESSOR_ADDRESS=nil
     command:  [ "/app/main"]
 
   chord7: 
@@ -75,7 +63,5 @@ services:
       - "9097:9097"
     environment:
       - CHORD_ID=7
-      # - SUCCESSOR_ADDRESS=nil
       - SERVER_ADDRESS=chord-go-chord7-1:9097
-      # - PREDECESSOR_ADDRESS=nil
     command:  [ "/app/main"]

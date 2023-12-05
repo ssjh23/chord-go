@@ -17,7 +17,55 @@ message Node {
     map<string, string> data = 5;
     repeated string successor_list = 6;
 }
+message CreateRingRequest {
+    string address = 1;
+}
 
+message CreateRingResponse {
+    int64 hashedID = 1;
+    string address = 2;
+    string successorAddress = 3;
+    string predecessorAddress = 4;
+}
+
+message JoinRingRequest {
+    string joinAddress = 2;
+}
+
+message JoinRingResponse {
+    int64 hashedID = 1;
+    string address = 2;
+    string successorAddress = 3;
+    string predecessorAddress = 4;
+}
+
+message StabilizeRequest{
+    string ip_address = 1;
+}
+
+message StabilizeResponse{
+    string successor_address = 1;
+}
+
+message GetInfoRequest{
+    string ip_address = 1;
+}
+
+message GetInfoResponse{
+    string my_ip_address = 1;
+    string successor_address = 2;
+    string precedessor_address = 3;
+    map<string, string> data = 4;
+    repeated string successor_list = 5;
+}
+
+message NotifyRequest{
+    string ip_address = 1;
+}
+
+message NotifyResponse{
+    string predecessor_address = 1;
+}
 // message Message {
 //     string message_type = 1;
 //     map<string, string> data = 2;

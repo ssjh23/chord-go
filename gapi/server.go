@@ -20,7 +20,7 @@ type Node struct {
 	fTable             []*Finger
 	successorAddress   string
 	predecessorAddress string
-	successorList 	   []string
+	successorList      []string
 	data               map[string]string
 	replicaData        map[string]map[string]string
 }
@@ -47,7 +47,7 @@ func InitNode(config util.Config) (Node, error) {
 		data:               map[string]string{"test": "test"},
 		successorAddress:   config.ServerAddress,
 		predecessorAddress: config.ServerAddress,
-		successorList: 	    []string{},
+		successorList:      []string{},
 		replicaData:        map[string]map[string]string{},
 	}
 
@@ -55,7 +55,6 @@ func InitNode(config util.Config) (Node, error) {
 
 	return node, nil
 }
-
 
 func populateFingerTables(node *Node) {
 	// populate finger tables
@@ -66,42 +65,4 @@ func populateFingerTables(node *Node) {
 		node.fTable = append(node.fTable, &Finger{key: k, NodeAddress: node.myIpAddress})
 		fmt.Printf("Finger table %d: %v \n", i, node.fTable[i])
 	}
-
-	// hardcode finger tables
-	// ip := node.myIpAddress
-	// if ip == "chord-go-chord1-1:9091" {
-	// 	node.fTable = append(node.fTable, &Finger{key: 7, NodeAddress: "chord-go-chord3-1:9093"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 8, NodeAddress: "chord-go-chord3-1:9093"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 10, NodeAddress: "chord-go-chord3-1:9093"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 14, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 22, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 38, NodeAddress: "chord-go-chord4-1:9094"})
-	// } else if ip == "chord-go-chord2-1:9092" {
-	// 	node.fTable = append(node.fTable, &Finger{key: 30, NodeAddress: "chord-go-chord4-1:9094"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 31, NodeAddress: "chord-go-chord4-1:9094"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 33, NodeAddress: "chord-go-chord4-1:9094"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 37, NodeAddress: "chord-go-chord4-1:9094"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 45, NodeAddress: "chord-go-chord4-1:9094"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 61, NodeAddress: "chord-go-chord1-1:9091"})
-	// } else if ip == "chord-go-chord3-1:9093" {
-	// 	node.fTable = append(node.fTable, &Finger{key: 12, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 13, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 15, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 19, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 27, NodeAddress: "chord-go-chord2-1:9092"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 43, NodeAddress: "chord-go-chord4-1:9094"})
-	// } else if ip == "chord-go-chord4-1:9094" {
-	// 	node.fTable = append(node.fTable, &Finger{key: 50, NodeAddress: "chord-go-chord1-1:9091"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 51, NodeAddress: "chord-go-chord1-1:9091"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 53, NodeAddress: "chord-go-chord1-1:9091"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 57, NodeAddress: "chord-go-chord1-1:9091"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 1, NodeAddress: "chord-go-chord1-1:9091"})
-	// 	node.fTable = append(node.fTable, &Finger{key: 17, NodeAddress: "chord-go-chord3-1:9093"})
-	// } else {
-	// 	fmt.Println("ERROR: node.myIpAddress is not chord-go-chord1-1:9091, chord-go-chord2-1:9092, chord-go-chord3-1:9093, chord-go-chord4-1:9094")
-	// }
-
-	// fmt.Printf("Finger table: %v \n", node.fTable)
-	// }
-
 }

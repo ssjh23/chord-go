@@ -8,6 +8,7 @@ import "rpc_test.proto";
 import "finger_table.proto";
 import "successor_list.proto";
 import "replicator.proto";
+import "chord.proto";
 
 service Chord {
     rpc GetChordNode (GetChordNodeRequest) returns (GetChordNodeResponse) {}
@@ -20,7 +21,7 @@ service Chord {
     rpc CreateRing (CreateRingRequest) returns (CreateRingResponse){}
     rpc JoinRing (JoinRingRequest) returns (JoinRingResponse){}
     rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
-    rpc GetPredecessor (GetPredecessorRequest) returns (GetPredecessorResponse) {}
+    rpc GetInfo (GetInfoRequest) returns (GetInfoResponse) {}
     rpc Notify (NotifyRequest) returns (NotifyResponse){}
     rpc FixFingerTable (FixFingerTableRequest) returns (FixFingerTableResponse){}
     rpc GetSuccessorList(GetSuccessorListRequest) returns (GetSuccessorListResponse){}
