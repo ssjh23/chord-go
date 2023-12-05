@@ -23,11 +23,11 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	successor := pb.NewChordClient(conn)
 
 	// Ask node to for its predecessor
-	successorResp, err := successor.GetPredecessor(ctx, &pb.GetPredecessorRequest{IpAddress: ""})
+	successorResp, err := successor.GetInfo(ctx, &pb.GetInfoRequest{IpAddress: ""})
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	successorPredecessor := successorResp.PredecessorAddress
+	successorPredecessor := successorResp.PrecedessorAddress
 	defer conn.Close()
 	m := 6
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
@@ -51,14 +51,7 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 
 	if myHashedIp < successorpredecessorHashedIp && successorpredecessorHashedIp < successorHashedIP {
 		// update new successors
-		log.Printf("i entered\n")
-
 		n.Node.successorAddress = successorPredecessor
-		// } else if myHashedIp > successorpredecessorHashedIp && successorpredecessorHashedIp > successorHashedIP {
-		// 	// update new successor
-		// 	log.Printf("i entered there\n")
-
-		// 	n.Node.successorAddress = successorPredecessor
 	}
 
 	// connect to new successor Node to run notify
@@ -79,12 +72,12 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	// new_successorPredecessor := new_successorResp.PredecessorAddress
 	// log.Printf("Successor Predecessor Updated: %s", new_successorPredecessor)
 
-	// Get the successor list from its successor 
+	// Get the successor list from its successor
 	successorListResp, _ := new_successor.GetSuccessorList(ctx, &pb.GetSuccessorListRequest{})
 	successorList := successorListResp.SuccessorList
 	fmt.Printf("successor ip: %s\n", n.Node.successorAddress)
 	log.Printf("\nResponse from Successor List: %s", successorList)
-	if (n.Node.successorAddress != n.Node.myIpAddress) {
+	if n.Node.successorAddress != n.Node.myIpAddress {
 		n.updateSuccessorList(successorList, n.Node.successorAddress)
 	}
 	// Print successor list
@@ -99,11 +92,11 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	return resp, nil
 }
 
-/* 
+/*
 Update Successor List Helper function
 Successor list = [Last successor, ..., 2nd successor, 1st successor]
 */
-func (n *Server)updateSuccessorList(successorList []string, successorAddress string) {
+func (n *Server) updateSuccessorList(successorList []string, successorAddress string) {
 	successorListLength := 5
 	finalSuccessorList := successorList
 	// Edge case: if the successor list is empty, do not add my own IP address
@@ -117,7 +110,7 @@ func (n *Server)updateSuccessorList(successorList []string, successorAddress str
 		if successorList[len(successorList)-1] == n.Node.myIpAddress {
 			fmt.Printf("Successor list, Remove last : %s\n", successorList)
 			finalSuccessorList = finalSuccessorList[:len(finalSuccessorList)-1]
-		} 
+		}
 		// Add successor to the list
 		if len(finalSuccessorList) < successorListLength {
 			// If after removing the last address, the list is empty or the last address is not the successor's address, add the successor's address to the list
@@ -162,7 +155,7 @@ func (n *Server) updateReplicasInSuccessors(ctx context.Context) {
 			// Form the request
 			checkReplicateDataRequest := &pb.CheckReplicateDataRequest{
 				NodeAddress: n.Node.myIpAddress,
-				Data: n.Node.data,
+				Data:        n.Node.data,
 			}
 			// Invoke CheckReplicateData RPC
 			_, err = successorClient.CheckReplicateData(ctx, checkReplicateDataRequest)
