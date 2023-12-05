@@ -29,7 +29,7 @@ message CreateRingResponse {
 }
 
 message JoinRingRequest {
-    string joinAddress = 2;
+    string joinAddress = 1;
 }
 
 message JoinRingResponse {
@@ -37,6 +37,13 @@ message JoinRingResponse {
     string address = 2;
     string successorAddress = 3;
     string predecessorAddress = 4;
+}
+
+message LeaveRingRequest {
+    string leaveAddress = 1;
+}
+message LeaveRingResponse {
+    string myIpAddress = 1;
 }
 
 message StabilizeRequest{

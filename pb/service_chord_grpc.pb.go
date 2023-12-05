@@ -31,6 +31,7 @@ type ChordClient interface {
 	GetValueFromKey(ctx context.Context, in *GetValueFromKeyRequest, opts ...grpc.CallOption) (*GetValueFromKeyResponse, error)
 	CreateRing(ctx context.Context, in *CreateRingRequest, opts ...grpc.CallOption) (*CreateRingResponse, error)
 	JoinRing(ctx context.Context, in *JoinRingRequest, opts ...grpc.CallOption) (*JoinRingResponse, error)
+	LeaveRing(ctx context.Context, in *LeaveRingRequest, opts ...grpc.CallOption) (*LeaveRingResponse, error)
 	Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error)
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 	Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error)
@@ -119,6 +120,15 @@ func (c *chordClient) JoinRing(ctx context.Context, in *JoinRingRequest, opts ..
 	return out, nil
 }
 
+func (c *chordClient) LeaveRing(ctx context.Context, in *LeaveRingRequest, opts ...grpc.CallOption) (*LeaveRingResponse, error) {
+	out := new(LeaveRingResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/LeaveRing", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *chordClient) Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error) {
 	out := new(StabilizeResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/Stabilize", in, out, opts...)
@@ -186,6 +196,7 @@ type ChordServer interface {
 	GetValueFromKey(context.Context, *GetValueFromKeyRequest) (*GetValueFromKeyResponse, error)
 	CreateRing(context.Context, *CreateRingRequest) (*CreateRingResponse, error)
 	JoinRing(context.Context, *JoinRingRequest) (*JoinRingResponse, error)
+	LeaveRing(context.Context, *LeaveRingRequest) (*LeaveRingResponse, error)
 	Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error)
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	Notify(context.Context, *NotifyRequest) (*NotifyResponse, error)
@@ -222,6 +233,9 @@ func (UnimplementedChordServer) CreateRing(context.Context, *CreateRingRequest) 
 }
 func (UnimplementedChordServer) JoinRing(context.Context, *JoinRingRequest) (*JoinRingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinRing not implemented")
+}
+func (UnimplementedChordServer) LeaveRing(context.Context, *LeaveRingRequest) (*LeaveRingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveRing not implemented")
 }
 func (UnimplementedChordServer) Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stabilize not implemented")
@@ -398,6 +412,24 @@ func _Chord_JoinRing_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chord_LeaveRing_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveRingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).LeaveRing(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/LeaveRing",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).LeaveRing(ctx, req.(*LeaveRingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Chord_Stabilize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StabilizeRequest)
 	if err := dec(in); err != nil {
@@ -544,6 +576,10 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JoinRing",
 			Handler:    _Chord_JoinRing_Handler,
+		},
+		{
+			MethodName: "LeaveRing",
+			Handler:    _Chord_LeaveRing_Handler,
 		},
 		{
 			MethodName: "Stabilize",
