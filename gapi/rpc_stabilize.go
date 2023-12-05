@@ -106,39 +106,18 @@ Successor list = [Last successor, ..., 2nd successor, 1st successor]
 func (n *Server)updateSuccessorList(successorList []string, successorAddress string) {
 	successorListLength := 5
 	finalSuccessorList := successorList
-	// Edge case: if the successor list is empty, do not add my own IP address
 	if len(successorList) == 0 {
-		fmt.Printf("Successor list, Empty: %s\n", successorList)
-		successorList = append(successorList, successorAddress)
-		finalSuccessorList = successorList
+		finalSuccessorList = append(finalSuccessorList, successorAddress) 
 	} else {
-		finalSuccessorList = successorList
-		// Remove from list if last address is the same address as the current node's address
-		if successorList[len(successorList)-1] == n.Node.myIpAddress {
-			fmt.Printf("Successor list, Remove last : %s\n", successorList)
-			finalSuccessorList = finalSuccessorList[:len(finalSuccessorList)-1]
-		} 
-		// Add successor to the list
 		if len(finalSuccessorList) < successorListLength {
-			// If after removing the last address, the list is empty or the last address is not the successor's address, add the successor's address to the list
-			if len(finalSuccessorList) == 0 || (finalSuccessorList[len(finalSuccessorList)-1] != successorAddress && finalSuccessorList[0] != n.Node.myIpAddress) {
-				fmt.Printf("Successor list, not full: %s\n", finalSuccessorList)
-				finalSuccessorList = append(finalSuccessorList, successorAddress)
-			} else {
-
+			if finalSuccessorList[0] == n.Node.myIpAddress {
+				finalSuccessorList = finalSuccessorList[1:]
 			}
+			finalSuccessorList = append(finalSuccessorList, successorAddress)
 		} else {
 			finalSuccessorList = finalSuccessorList[1:]
-			fmt.Printf("Successor list, full: %s\n", finalSuccessorList)
-			fmt.Printf("Successor address: %s\n", successorAddress)
-			// Add successor to the list
 			finalSuccessorList = append(finalSuccessorList, successorAddress)
 		}
-		// // Edge case where the last address in the list is the same as the node's ip address. Only happens when the successor list size is same as the number of nodes in the network
-		// if finalSuccessorList[0] == n.Node.myIpAddress {
-		// 	fmt.Printf("Successor list, same first and last: %s\n", finalSuccessorList)
-		// 	finalSuccessorList = finalSuccessorList[1:]
-		// }
 	}
 	n.Node.successorList = finalSuccessorList
 }
