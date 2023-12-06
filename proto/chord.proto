@@ -74,6 +74,10 @@ message GetInfoResponse{
     string precedessor_address = 3;
     map<string, string> data = 4;
     repeated string successor_list = 5;
+    map<string, Data> replicated = 6;
+    message Data{
+        map<string, string> data_map= 1;
+    }
 }
 
 message NotifyRequest{

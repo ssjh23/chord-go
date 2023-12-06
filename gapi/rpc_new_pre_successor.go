@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (n *Server) NewPreSuccesor(ctx context.Context, req *pb.NewPreSuccessorRequest) (*pb.NewPreSuccessorResponse, error) {
+func (n *Server) NewPreSuccessor(ctx context.Context, req *pb.NewPreSuccessorRequest) (*pb.NewPreSuccessorResponse, error) {
 	flag.Parse()
 	if req.GetIpAddress() == "" || req.GetAddressType() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "IP Address cannot be empty and addressType needs to be predecessor or successor")

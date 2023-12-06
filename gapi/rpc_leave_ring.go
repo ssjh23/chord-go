@@ -14,14 +14,14 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 	flag.Parse()
 	successor := n.Node.successorAddress
 
-	// connect to the successor to add its back up data into its data
+	// connect to the successor to migrate data
 	conn, err := grpc.Dial(successor, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	c := pb.NewChordClient(conn)
-	// Ask node to find successor using ip address
+	// Migrate data to successor
 	for key, value := range n.Node.data {
 		migrateDataMessage := &pb.InsertKeyValuePairRequest{Key: key, Value: value}
 		migrateDataResponse, err := c.InsertKeyValuePair(ctx, migrateDataMessage)
@@ -30,6 +30,7 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 		}
 		log.Printf("Migrate Data Response: Key: %s, Value: %s - %s", key, value, migrateDataResponse.Message)
 	}
+
 	// change to this node's successor to change its predecessor to this node's predecessor
 	succesorResp, err := c.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
 	if err != nil {
@@ -50,6 +51,10 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 	if err != nil {
 		log.Fatalf("%v Failed to update successor: %v", predecessorResp.SucessorAddress, err)
 	}
+
+	// change this node's predecessor and successor to prevent stabalize from running
+	n.Node.predecessorAddress = n.Node.myIpAddress
+	n.Node.successorAddress = n.Node.myIpAddress
 
 	resp := &pb.LeaveRingResponse{
 		MyIpAddress: n.Node.myIpAddress + "has successfully left the ring",
