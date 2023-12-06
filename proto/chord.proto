@@ -42,8 +42,18 @@ message JoinRingResponse {
 message LeaveRingRequest {
     string leaveAddress = 1;
 }
+
 message LeaveRingResponse {
     string myIpAddress = 1;
+}
+
+message NewPreSuccessorRequest {
+    string addressType = 1;
+    string IpAddress = 2;
+}
+message NewPreSuccessorResponse {
+    string PredecessorAddress = 1;
+    string SucessorAddress = 2;
 }
 
 message StabilizeRequest{

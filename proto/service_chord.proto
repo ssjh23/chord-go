@@ -21,6 +21,7 @@ service Chord {
     rpc CreateRing (CreateRingRequest) returns (CreateRingResponse){}
     rpc JoinRing (JoinRingRequest) returns (JoinRingResponse){}
     rpc LeaveRing (LeaveRingRequest) returns (LeaveRingResponse){}
+    rpc newPreSuccessor (NewPreSuccessorRequest) returns (NewPreSuccessorResponse){}
     rpc Stabilize (StabilizeRequest) returns (StabilizeResponse){}
     rpc GetInfo (GetInfoRequest) returns (GetInfoResponse) {}
     rpc Notify (NotifyRequest) returns (NotifyResponse){}

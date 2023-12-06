@@ -32,6 +32,7 @@ type ChordClient interface {
 	CreateRing(ctx context.Context, in *CreateRingRequest, opts ...grpc.CallOption) (*CreateRingResponse, error)
 	JoinRing(ctx context.Context, in *JoinRingRequest, opts ...grpc.CallOption) (*JoinRingResponse, error)
 	LeaveRing(ctx context.Context, in *LeaveRingRequest, opts ...grpc.CallOption) (*LeaveRingResponse, error)
+	NewPreSuccessor(ctx context.Context, in *NewPreSuccessorRequest, opts ...grpc.CallOption) (*NewPreSuccessorResponse, error)
 	Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error)
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 	Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error)
@@ -129,6 +130,15 @@ func (c *chordClient) LeaveRing(ctx context.Context, in *LeaveRingRequest, opts 
 	return out, nil
 }
 
+func (c *chordClient) NewPreSuccessor(ctx context.Context, in *NewPreSuccessorRequest, opts ...grpc.CallOption) (*NewPreSuccessorResponse, error) {
+	out := new(NewPreSuccessorResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/newPreSuccessor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *chordClient) Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error) {
 	out := new(StabilizeResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/Stabilize", in, out, opts...)
@@ -197,6 +207,7 @@ type ChordServer interface {
 	CreateRing(context.Context, *CreateRingRequest) (*CreateRingResponse, error)
 	JoinRing(context.Context, *JoinRingRequest) (*JoinRingResponse, error)
 	LeaveRing(context.Context, *LeaveRingRequest) (*LeaveRingResponse, error)
+	NewPreSuccessor(context.Context, *NewPreSuccessorRequest) (*NewPreSuccessorResponse, error)
 	Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error)
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	Notify(context.Context, *NotifyRequest) (*NotifyResponse, error)
@@ -236,6 +247,9 @@ func (UnimplementedChordServer) JoinRing(context.Context, *JoinRingRequest) (*Jo
 }
 func (UnimplementedChordServer) LeaveRing(context.Context, *LeaveRingRequest) (*LeaveRingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveRing not implemented")
+}
+func (UnimplementedChordServer) NewPreSuccessor(context.Context, *NewPreSuccessorRequest) (*NewPreSuccessorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NewPreSuccessor not implemented")
 }
 func (UnimplementedChordServer) Stabilize(context.Context, *StabilizeRequest) (*StabilizeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stabilize not implemented")
@@ -430,6 +444,24 @@ func _Chord_LeaveRing_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Chord_NewPreSuccessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NewPreSuccessorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).NewPreSuccessor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/newPreSuccessor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).NewPreSuccessor(ctx, req.(*NewPreSuccessorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Chord_Stabilize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StabilizeRequest)
 	if err := dec(in); err != nil {
@@ -580,6 +612,10 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LeaveRing",
 			Handler:    _Chord_LeaveRing_Handler,
+		},
+		{
+			MethodName: "newPreSuccessor",
+			Handler:    _Chord_NewPreSuccessor_Handler,
 		},
 		{
 			MethodName: "Stabilize",

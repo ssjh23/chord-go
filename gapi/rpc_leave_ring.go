@@ -30,29 +30,26 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 		}
 		log.Printf("Migrate Data Response: Key: %s, Value: %s - %s", key, value, migrateDataResponse.Message)
 	}
+	// change to this node's successor to change its predecessor to this node's predecessor
+	succesorResp, err := c.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
+	if err != nil {
+		log.Fatalf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
+	}
 
-	// // connect to new successor
-	// n.Node.successorAddress = successorResponse.SuccessorAddress
-	// conn2, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	// if err != nil {
-	// 	log.Fatalf("did not connect: %v", err)
-	// }
-	// defer conn2.Close()
-	// successor := pb.NewChordClient(conn2)
+	// connect to this node's predecessor to change its successor to this node's sucessor
+	predecessor := n.Node.predecessorAddress
+	conn2, err := grpc.Dial(predecessor, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn2.Close()
+	c2 := pb.NewChordClient(conn2)
 
-	// // Ask node to run notify and update its predecessor
-	// successorResp, err := successor.Notify(ctx, &pb.NotifyRequest{IpAddress: n.Node.myIpAddress})
-	// if err != nil {
-	// 	log.Fatalf("%v Fail to notify: %v", successorResp, err)
-	// }
-	// successorPredecessor := successorResp.PredecessorAddress
-	// log.Printf("Successor Predecessor Updated: %s", successorPredecessor)
-
-	// n.Node.predecessorAddress = n.Node.myIpAddress
-
-	// util.ChangeEnvVariable(".", "SUCCESSOR_ADDRESS", n.Node.successorAddress)
-	// JUST ADDED TO POPULATE MY PREDECESSOR
-	// n.Stabilize(ctx, &pb.StabilizeRequest{IpAddress: n.Node.myIpAddress})
+	// new predecessor's successor
+	predecessorResp, err := c2.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.successorAddress, AddressType: "successor"})
+	if err != nil {
+		log.Fatalf("%v Failed to update successor: %v", predecessorResp.SucessorAddress, err)
+	}
 
 	resp := &pb.LeaveRingResponse{
 		MyIpAddress: n.Node.myIpAddress + "has successfully left the ring",
