@@ -15,8 +15,78 @@ message Node {
     string precedessor_address = 3;
     repeated Finger fTable = 4;
     map<string, string> data = 5;
+    repeated string successor_list = 6;
+}
+message CreateRingRequest {
+    string address = 1;
 }
 
+message CreateRingResponse {
+    int64 hashedID = 1;
+    string address = 2;
+    string successorAddress = 3;
+    string predecessorAddress = 4;
+}
+
+message JoinRingRequest {
+    string joinAddress = 1;
+}
+
+message JoinRingResponse {
+    int64 hashedID = 1;
+    string address = 2;
+    string successorAddress = 3;
+    string predecessorAddress = 4;
+}
+
+message LeaveRingRequest {
+    string leaveAddress = 1;
+}
+
+message LeaveRingResponse {
+    string myIpAddress = 1;
+}
+
+message NewPreSuccessorRequest {
+    string addressType = 1;
+    string IpAddress = 2;
+}
+message NewPreSuccessorResponse {
+    string PredecessorAddress = 1;
+    string SucessorAddress = 2;
+}
+
+message StabilizeRequest{
+    string ip_address = 1;
+}
+
+message StabilizeResponse{
+    string successor_address = 1;
+}
+
+message GetInfoRequest{
+    string ip_address = 1;
+}
+
+message GetInfoResponse{
+    string my_ip_address = 1;
+    string successor_address = 2;
+    string precedessor_address = 3;
+    map<string, string> data = 4;
+    repeated string successor_list = 5;
+    map<string, Data> replicated = 6;
+    message Data{
+        map<string, string> data_map= 1;
+    }
+}
+
+message NotifyRequest{
+    string ip_address = 1;
+}
+
+message NotifyResponse{
+    string predecessor_address = 1;
+}
 // message Message {
 //     string message_type = 1;
 //     map<string, string> data = 2;

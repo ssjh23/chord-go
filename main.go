@@ -49,21 +49,14 @@ func runGrpcServer(config util.Config) {
 	// Periodically call stabalize
 	go func() {
 		for {
-			time.Sleep(5 * time.Second)
+			time.Sleep(10 * time.Second)
 			fmt.Println("periodically stabilizing and fixing fingers..........")
-			// config, err := util.LoadConfig(".")
-			// if err != nil {
-			// 	log.Fatalf("failed to load config: %v", err)
-			// }
-			// if config.SuccessorAddress != "nil" { // to prevent uninitialised nodes from being called
 			server.Stabilize(context.Background(), &pb.StabilizeRequest{IpAddress: ""})
 			server.FixFingerTable(context.Background(), &pb.FixFingerTableRequest{Key: ""})
-			// }
 		}
 	}()
 	err = grpcServer.Serve(listener)
 	if err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
-
 }

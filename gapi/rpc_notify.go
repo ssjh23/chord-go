@@ -23,7 +23,6 @@ func (n *Server) Notify(ctx context.Context, req *pb.NotifyRequest) (*pb.NotifyR
 		myPredecessorHashedIp := Sha1Modulo(n.Node.predecessorAddress, m)
 		new_predecessorHashedIp := Sha1Modulo(req.GetIpAddress(), m)
 
-		// if n.Node.predecessorAddress == "nil" || (myPredecessorHashedIp < new_predecessorHashedIp && new_predecessorHashedIp < myHashedIp) {
 		if myPredecessorHashedIp < new_predecessorHashedIp && new_predecessorHashedIp < myHashedIp {
 			n.Node.predecessorAddress = req.GetIpAddress()
 			log.Printf("Predecessor Updated: %s\n", n.Node.predecessorAddress)

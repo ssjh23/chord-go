@@ -157,6 +157,9 @@ func file_service_chord_proto_init() {
 	}
 	file_rpc_test_proto_init()
 	file_finger_table_proto_init()
+	file_successor_list_proto_init()
+	file_replicator_proto_init()
+	file_chord_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

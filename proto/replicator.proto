@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/ssjh23/chord-go/pb";
+
+
+message CheckReplicateDataRequest {
+    string node_address = 1;
+    map <string, string> data = 2;
+}
+
+message CheckReplicateDataResponse {
+    bool replicated = 1;
+}
+
