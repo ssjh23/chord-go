@@ -82,6 +82,7 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	if err != nil {
 		log.Printf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
 	}
+	log.Printf("failedSuccessor: %s", failedSuccessor)
 	if failedSuccessor != "" {
 		for key, value := range n.Node.replicaData[failedSuccessor] {
 			migrateDataMessage := &pb.InsertKeyValuePairRequest{Key: key, Value: value}

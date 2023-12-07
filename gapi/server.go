@@ -44,7 +44,7 @@ func InitNode(config util.Config) (Node, error) {
 	node := Node{
 		myIpAddress:        config.ServerAddress,
 		fTable:             []*Finger{},
-		data:               map[string]string{"test": "test"},
+		data:               map[string]string{},
 		successorAddress:   config.ServerAddress,
 		predecessorAddress: config.ServerAddress,
 		successorList:      []string{},

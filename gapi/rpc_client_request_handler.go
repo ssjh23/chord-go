@@ -17,6 +17,7 @@ func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRe
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty and requestType needs to be GET or INSERT")
 	}
 	hashedKey := Sha1Modulo(req.GetRequestedKey(), m)
+	log.Printf("%+v hashedKey in ClientRequestHandler : %d", req.GetRequestedKey(), hashedKey)
 	findSuccessorMessage := &pb.FindSuccessorRequest{RequestedKey: strconv.FormatInt(hashedKey, 10)}
 	successorResponse, _ := server.FindSuccessor(ctx, findSuccessorMessage)
 
