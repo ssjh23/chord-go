@@ -99,8 +99,12 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	if err != nil {
 		log.Printf("%v Fail to notify: %v", new_successorResp, err)
 	}
-	// new_successorPredecessor := new_successorResp.PredecessorAddress
-	// log.Printf("Successor Predecessor Updated: %s", new_successorPredecessor)
+
+	// update my data from successor's response
+	new_data_to_store := new_successorResp.DataToBeAbsorbed
+	for key, value := range new_data_to_store {
+		n.Node.data[key] = value
+	}
 
 	// Get the successor list from its successor
 	successorListResp, _ := new_successor.GetSuccessorList(ctx, &pb.GetSuccessorListRequest{})
