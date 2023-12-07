@@ -30,6 +30,9 @@ func Sha1Modulo(inputString string, m int) int64 {
 
 	// Get the modulo
 	modulo := new(big.Int).Mod(hashValue, divisor)
+
+	// print input string and hash value
+	fmt.Printf("Input: %s, Sha1Modulo: %d\n", inputString, modulo.Int64())
 	return modulo.Int64()
 }
 
