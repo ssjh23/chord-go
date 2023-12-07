@@ -8,6 +8,7 @@ import (
 	"math"
 	"time"
 
+	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -43,7 +44,7 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	if err == nil {
 		successorPredecessor := successorResp.PrecedessorAddress
 		log.Printf("Successor Predecessor: %s", successorPredecessor)
-		m := 6
+		m = constant.VALUE_OF_M
 		myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 		successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)
 		successorpredecessorHashedIp := Sha1Modulo(successorPredecessor, m)
@@ -78,9 +79,9 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	defer conn2.Close()
 	new_successor := pb.NewChordClient(conn2)
 
-	succesorResp, err := new_successor.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
+	_, err = new_successor.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
 	if err != nil {
-		log.Printf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
+		log.Printf("Failed to update predecessor: %v", err)
 	}
 	log.Printf("failedSuccessor: %s", failedSuccessor)
 	if failedSuccessor != "" {
@@ -88,7 +89,7 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 			migrateDataMessage := &pb.InsertKeyValuePairRequest{Key: key, Value: value}
 			migrateDataResponse, err := new_successor.InsertKeyValuePair(ctx, migrateDataMessage)
 			if err != nil {
-				log.Fatalf("could not migrate data: %v", err)
+				log.Printf("could not migrate data: %v", err)
 			}
 			log.Printf("Migrate Data Response: Key: %s, Value: %s - %s", key, value, migrateDataResponse.Message)
 		}
@@ -174,7 +175,7 @@ func (n *Server) updateReplicasInSuccessors(ctx context.Context) {
 			// Invoke CheckReplicateData RPC
 			_, err = successorClient.CheckReplicateData(ctx, checkReplicateDataRequest)
 			if err != nil {
-				log.Printf("Error from CheckReplicateData: %v", err)
+				log.Printf("Error from CheckReplicateData in stabalize: %v", err)
 			}
 		}
 	}

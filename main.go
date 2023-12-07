@@ -18,7 +18,7 @@ func main() {
 	fmt.Println("starting Main fn!")
 	config, err := util.LoadConfig(".")
 	if err != nil {
-		log.Fatalf("failed to load config: %v", err)
+		log.Printf("failed to load config: %v", err)
 	}
 
 	runGrpcServer(config)
@@ -27,7 +27,7 @@ func main() {
 func runGrpcServer(config util.Config) {
 	server, err := gapi.NewServer(config)
 	if err != nil {
-		log.Fatalf("failed to create server: %v", err)
+		log.Printf("failed to create server: %v", err)
 	}
 	grpcServer := grpc.NewServer()
 
@@ -39,7 +39,7 @@ func runGrpcServer(config util.Config) {
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
 		fmt.Errorf("failed to listen: %v", err)
-		// log.Fatalf("failed to listen: %v", err)
+		// log.Printf("failed to listen: %v", err)
 	}
 	fmt.Printf("Start gRPC server on %s\n", listener.Addr().String())
 
@@ -58,7 +58,7 @@ func runGrpcServer(config util.Config) {
 	}()
 	err = grpcServer.Serve(listener)
 	if err != nil {
-		// log.Fatalf("failed to serve: %v", err)
+		// log.Printf("failed to serve: %v", err)
 		fmt.Errorf("failed to serve: %v", err)
 	}
 }

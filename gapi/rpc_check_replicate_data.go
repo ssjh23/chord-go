@@ -16,7 +16,7 @@ func (n *Server) CheckReplicateData(ctx context.Context, req *pb.CheckReplicateD
 		// log that the replica does not exist yet
 		log.Printf("Replica data for node %s does not exist yet", requestingNodeAddress)
 		// Put the replica data in the replica data list
-		n.Node.replicaData[requestingNodeAddress] = req.GetData()	
+		n.Node.replicaData[requestingNodeAddress] = req.GetData()
 	}
 	// If the data already exist, check that the maps are exactly the same. use reflect.DeepEqual to compare the maps
 	eq := reflect.DeepEqual(n.Node.replicaData[requestingNodeAddress], req.GetData())

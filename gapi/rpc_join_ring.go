@@ -5,6 +5,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -18,13 +19,13 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 		return nil, status.Errorf(codes.InvalidArgument, "Address cannot be empty")
 	}
 
-	m := 6
+	m = constant.VALUE_OF_M
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 
 	// connect to the node that is already in the ring
 	conn, err := grpc.Dial(req.GetJoinAddress(), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	c := pb.NewChordClient(conn)
@@ -36,7 +37,7 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 	n.Node.successorAddress = successorResponse.SuccessorAddress
 	conn2, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn2.Close()
 	successor := pb.NewChordClient(conn2)
@@ -44,7 +45,7 @@ func (n *Server) JoinRing(ctx context.Context, req *pb.JoinRingRequest) (*pb.Joi
 	// Ask node to run notify and update its predecessor
 	successorResp, err := successor.Notify(ctx, &pb.NotifyRequest{IpAddress: n.Node.myIpAddress})
 	if err != nil {
-		log.Fatalf("%v Fail to notify: %v", successorResp, err)
+		log.Printf("%v Fail to notify: %v", successorResp, err)
 	}
 	successorPredecessor := successorResp.PredecessorAddress
 	log.Printf("Successor Predecessor Updated: %s", successorPredecessor)

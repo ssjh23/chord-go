@@ -24,13 +24,13 @@ func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRe
 	if req.GetRequestType() == "GET" {
 		conn, err := grpc.Dial(successorResponse.SuccessorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
-			log.Fatalf("did not connect: %v", err)
+			log.Printf("did not connect: %v", err)
 		}
 		defer conn.Close()
 		c := pb.NewChordClient(conn)
 		chordResp, err := c.GetValueFromKey(ctx, &pb.GetValueFromKeyRequest{Key: req.GetRequestedKey()})
 		if err != nil {
-			log.Fatalf("could not get chord response: %v", err)
+			log.Printf("could not get chord response while GetValueFromKey in ClientRequestHandler: %v", err)
 		}
 		resp := &pb.ClientResponse{
 			RequestType:   "Successful GET",
@@ -42,13 +42,13 @@ func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRe
 	} else {
 		conn, err := grpc.Dial(successorResponse.SuccessorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
-			log.Fatalf("did not connect: %v", err)
+			log.Printf("did not connect: %v", err)
 		}
 		defer conn.Close()
 		c := pb.NewChordClient(conn)
 		chordResp, err := c.InsertKeyValuePair(ctx, &pb.InsertKeyValuePairRequest{Key: req.GetRequestedKey(), Value: req.GetValue()})
 		if err != nil {
-			log.Fatalf("could not get chord response: %v", err)
+			log.Printf("could not get chord response while InsertKeyValuePair in ClientRequestHandler: %v", err)
 		}
 		resp := &pb.ClientResponse{
 			RequestType:  chordResp.GetMessage(),

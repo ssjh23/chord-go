@@ -9,12 +9,13 @@ import (
 	"math/big"
 	"strconv"
 
+	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-var m = 8
+var m = constant.VALUE_OF_M
 
 func Sha1Modulo(inputString string, m int) int64 {
 	// Hash the input string using SHA-1
@@ -110,13 +111,13 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 	if nextNodeAddress == n.Node.myIpAddress {
 		conn, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
-			log.Fatalf("did not connect: %v", err)
+			log.Printf("did not connect: %v", err)
 		}
 		defer conn.Close()
 		nextNode := pb.NewChordClient(conn)
 		nextNodeResp, err := nextNode.FindSuccessor(ctx, &pb.FindSuccessorRequest{RequestedKey: req.GetRequestedKey()})
 		if err != nil {
-			log.Fatalf("could not get chord response: %v", err)
+			log.Printf("could not get chord response while calling FindSuccessor in FindSuccessor: %v", err)
 		}
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: nextNodeResp.SuccessorAddress,
@@ -127,14 +128,14 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 
 	conn, err := grpc.Dial(nextNodeAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	nextNode := pb.NewChordClient(conn)
 	nextNodeResp, err := nextNode.FindSuccessor(ctx, &pb.FindSuccessorRequest{RequestedKey: req.GetRequestedKey()})
 
 	if err != nil {
-		log.Fatalf("could not get chord response: %v", err)
+		log.Printf("could not get chord response while nextNode.FindSuccessor in FindSuccessor: %v", err)
 	}
 	resp := &pb.FindSuccessorResponse{
 		SuccessorAddress: nextNodeResp.SuccessorAddress,

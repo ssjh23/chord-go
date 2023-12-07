@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"math"
 	"math/big"
+
+	"github.com/ssjh23/chord-go/constant"
 )
 
 type Node struct {
@@ -21,7 +23,7 @@ type Finger struct {
 	node *Node
 }
 
-var m = 6
+var m = constant.VALUE_OF_M
 
 // math fn: given a string, hash it using SHA-1 and return the modulo of the hash by 2^m
 // we use this function to hash both the keys and the ip addresses of the nodes

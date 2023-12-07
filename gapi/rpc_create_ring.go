@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 
+	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -15,7 +16,7 @@ func (n *Server) CreateRing(ctx context.Context, req *pb.CreateRingRequest) (*pb
 		return nil, status.Errorf(codes.InvalidArgument, "Address cannot be empty")
 	}
 
-	m := 6
+	m = constant.VALUE_OF_M
 
 	n.Node.successorAddress = n.Node.myIpAddress
 	n.Node.predecessorAddress = n.Node.myIpAddress

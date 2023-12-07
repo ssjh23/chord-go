@@ -7,6 +7,7 @@ import (
 	"log"
 	"math"
 
+	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -19,7 +20,7 @@ func (n *Server) Notify(ctx context.Context, req *pb.NotifyRequest) (*pb.NotifyR
 	if req.GetIpAddress() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty")
 	} else {
-		m := 6
+		m = constant.VALUE_OF_M
 		myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 		myPredecessorHashedIp := Sha1Modulo(n.Node.predecessorAddress, m)
 		new_predecessorHashedIp := Sha1Modulo(req.GetIpAddress(), m)

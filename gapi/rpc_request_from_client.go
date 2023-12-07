@@ -19,13 +19,13 @@ func (server *Server) RequestFromClient(ctx context.Context, req *pb.GetRequestF
 	log.Printf("Successor Address: %s", server.Node.successorAddress)
 	conn, err := grpc.Dial(server.config.SuccessorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	c := pb.NewChordClient(conn)
 	chordResp, err := c.GetChordNode(ctx, &pb.GetChordNodeRequest{Id: req.GetInput()})
 	if err != nil {
-		log.Fatalf("could not get chord response: %v", err)
+		log.Printf("could not get chord response while GetChordNode from RequestFromClient: %v", err)
 	}
 	resp := &pb.GetResponseToClient{
 		InputFromClient: req.GetInput(),

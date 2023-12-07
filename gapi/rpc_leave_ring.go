@@ -17,7 +17,7 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 	// connect to the successor to migrate data
 	conn, err := grpc.Dial(successor, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn.Close()
 	c := pb.NewChordClient(conn)
@@ -26,7 +26,7 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 		migrateDataMessage := &pb.InsertKeyValuePairRequest{Key: key, Value: value}
 		migrateDataResponse, err := c.InsertKeyValuePair(ctx, migrateDataMessage)
 		if err != nil {
-			log.Fatalf("could not migrate data: %v", err)
+			log.Printf("could not migrate data: %v", err)
 		}
 		log.Printf("Migrate Data Response: Key: %s, Value: %s - %s", key, value, migrateDataResponse.Message)
 	}
@@ -34,14 +34,14 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 	// change to this node's successor to change its predecessor to this node's predecessor
 	succesorResp, err := c.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
 	if err != nil {
-		log.Fatalf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
+		log.Printf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
 	}
 
 	// connect to this node's predecessor to change its successor to this node's sucessor
 	predecessor := n.Node.predecessorAddress
 	conn2, err := grpc.Dial(predecessor, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("did not connect: %v", err)
 	}
 	defer conn2.Close()
 	c2 := pb.NewChordClient(conn2)
@@ -49,7 +49,7 @@ func (n *Server) LeaveRing(ctx context.Context, req *pb.LeaveRingRequest) (*pb.L
 	// new predecessor's successor
 	predecessorResp, err := c2.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.successorAddress, AddressType: "successor"})
 	if err != nil {
-		log.Fatalf("%v Failed to update successor: %v", predecessorResp.SucessorAddress, err)
+		log.Printf("%v Failed to update successor: %v", predecessorResp.SucessorAddress, err)
 	}
 
 	// change this node's predecessor and successor to prevent stabalize from running
