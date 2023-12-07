@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"time"
 
 	"github.com/ssjh23/chord-go/pb"
 	"google.golang.org/grpc"
@@ -15,9 +16,12 @@ import (
 func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.StabilizeResponse, error) {
 	flag.Parse()
 	// connect to the successor Node
+	fmt.Println("Stabilizing...")
+	log.Printf("successorAddress: %s", n.Node.successorAddress)
+	failedSuccessor := ""
 	conn, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("Fail to dial successor while stabilizing: %v", err)
 	}
 	defer conn.Close()
 	successor := pb.NewChordClient(conn)
@@ -25,49 +29,75 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 	// Ask node to for its predecessor
 	successorResp, err := successor.GetInfo(ctx, &pb.GetInfoRequest{IpAddress: ""})
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("Fail to GetInfo from successor while stabilizing: %v", err)
+		failedSuccessor = n.Node.successorList[len(n.Node.successorList)-1]
+		n.Node.successorList = n.Node.successorList[:len(n.Node.successorList)-1]
+		newSuccessor := n.Node.successorList[len(n.Node.successorList)-1]
+		n.Node.successorAddress = newSuccessor
+		log.Printf("New successor: %s", newSuccessor)
+		// Sleep for some time before trying again
+		time.Sleep(time.Second)
+		// n.Stabilize(ctx, &pb.StabilizeRequest{IpAddress: ""})
 	}
-	successorPredecessor := successorResp.PrecedessorAddress
 	defer conn.Close()
-	m := 6
-	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
-	successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)
-	successorpredecessorHashedIp := Sha1Modulo(successorPredecessor, m)
-	// log.Printf("My hashed IP: %+v", myHashedIp)
-	// log.Printf("successor haship: %+v", successorHashedIP)
-	// log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
+	if err == nil {
+		successorPredecessor := successorResp.PrecedessorAddress
+		log.Printf("Successor Predecessor: %s", successorPredecessor)
+		m := 6
+		myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
+		successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)
+		successorpredecessorHashedIp := Sha1Modulo(successorPredecessor, m)
+		// log.Printf("My hashed IP: %+v", myHashedIp)
+		// log.Printf("successor haship: %+v", successorHashedIP)
+		// log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
 
-	// handling edge case: i am my own successor
-	if myHashedIp == successorHashedIP {
-		n.Node.successorAddress = successorPredecessor
-	}
-
-	// handling edge case: in between "start" & "end" of ring
-	if myHashedIp > successorHashedIP {
-		if (successorpredecessorHashedIp > myHashedIp && successorpredecessorHashedIp <= int64(math.Pow(float64(2), float64(m)))) || (successorpredecessorHashedIp >= 0 && successorpredecessorHashedIp < successorHashedIP) {
+		// handling edge case: i am my own successor
+		if myHashedIp == successorHashedIP {
 			n.Node.successorAddress = successorPredecessor
 		}
-	}
 
-	if myHashedIp < successorpredecessorHashedIp && successorpredecessorHashedIp < successorHashedIP {
-		// update new successors
-		n.Node.successorAddress = successorPredecessor
+		// handling edge case: in between "start" & "end" of ring
+		if myHashedIp > successorHashedIP {
+			if (successorpredecessorHashedIp > myHashedIp && successorpredecessorHashedIp <= int64(math.Pow(float64(2), float64(m)))) || (successorpredecessorHashedIp >= 0 && successorpredecessorHashedIp < successorHashedIP) {
+				n.Node.successorAddress = successorPredecessor
+			}
+		}
+
+		if myHashedIp < successorpredecessorHashedIp && successorpredecessorHashedIp < successorHashedIP {
+			// update new successors
+			n.Node.successorAddress = successorPredecessor
+		}
 	}
 
 	// connect to new successor Node to run notify
 	// connect to the successor Node
 	conn2, err := grpc.Dial(n.Node.successorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Printf("Fail to dial new successor while stabilizing: %v", err)
 	}
 	defer conn2.Close()
 	new_successor := pb.NewChordClient(conn2)
 
+	succesorResp, err := new_successor.NewPreSuccessor(ctx, &pb.NewPreSuccessorRequest{IpAddress: n.Node.predecessorAddress, AddressType: "predecessor"})
+	if err != nil {
+		log.Printf("%v Failed to update predecessor: %v", succesorResp.PredecessorAddress, err)
+	}
+	if failedSuccessor != "" {
+		for key, value := range n.Node.replicaData[failedSuccessor] {
+			migrateDataMessage := &pb.InsertKeyValuePairRequest{Key: key, Value: value}
+			migrateDataResponse, err := new_successor.InsertKeyValuePair(ctx, migrateDataMessage)
+			if err != nil {
+				log.Fatalf("could not migrate data: %v", err)
+			}
+			log.Printf("Migrate Data Response: Key: %s, Value: %s - %s", key, value, migrateDataResponse.Message)
+		}
+	}
+
 	// Ask node to run notify and update its predecessor
-	log.Printf("My sucessor IP Updated: %s", n.Node.successorAddress)
+	log.Printf("My successor IP Updated: %s", n.Node.successorAddress)
 	new_successorResp, err := new_successor.Notify(ctx, &pb.NotifyRequest{IpAddress: n.Node.myIpAddress})
 	if err != nil {
-		log.Fatalf("%v Fail to notify: %v", new_successorResp, err)
+		log.Printf("%v Fail to notify: %v", new_successorResp, err)
 	}
 	// new_successorPredecessor := new_successorResp.PredecessorAddress
 	// log.Printf("Successor Predecessor Updated: %s", new_successorPredecessor)
@@ -127,7 +157,7 @@ func (n *Server) updateReplicasInSuccessors(ctx context.Context) {
 			conn, err := grpc.Dial(successor, grpc.WithTransportCredentials(insecure.NewCredentials()))
 			// Invoke CheckReplicateData RPC
 			if err != nil {
-				log.Fatalf("did not connect: %v", err)
+				log.Printf("Fail to dial successor while updateReplicasInSuccessors: %v", err)
 			}
 			defer conn.Close()
 			successorClient := pb.NewChordClient(conn)
@@ -139,7 +169,7 @@ func (n *Server) updateReplicasInSuccessors(ctx context.Context) {
 			// Invoke CheckReplicateData RPC
 			_, err = successorClient.CheckReplicateData(ctx, checkReplicateDataRequest)
 			if err != nil {
-				log.Fatalf("did not connect: %v", err)
+				log.Printf("Error from CheckReplicateData: %v", err)
 			}
 		}
 	}

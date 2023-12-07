@@ -38,7 +38,8 @@ func runGrpcServer(config util.Config) {
 	reflection.Register(grpcServer)
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		fmt.Errorf("failed to listen: %v", err)
+		// log.Fatalf("failed to listen: %v", err)
 	}
 	fmt.Printf("Start gRPC server on %s\n", listener.Addr().String())
 
@@ -57,6 +58,7 @@ func runGrpcServer(config util.Config) {
 	}()
 	err = grpcServer.Serve(listener)
 	if err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		// log.Fatalf("failed to serve: %v", err)
+		fmt.Errorf("failed to serve: %v", err)
 	}
 }

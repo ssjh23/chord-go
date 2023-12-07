@@ -37,7 +37,8 @@ type ChordClient interface {
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 	Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error)
 	FixFingerTable(ctx context.Context, in *FixFingerTableRequest, opts ...grpc.CallOption) (*FixFingerTableResponse, error)
-	CheckPredecessor(ctx context.Context, in *CheckPredecessorRequest, opts ...grpc.CallOption) (*CheckPredecessorResponse, error)
+	GetSuccessorList(ctx context.Context, in *GetSuccessorListRequest, opts ...grpc.CallOption) (*GetSuccessorListResponse, error)
+	CheckReplicateData(ctx context.Context, in *CheckReplicateDataRequest, opts ...grpc.CallOption) (*CheckReplicateDataResponse, error)
 }
 
 type chordClient struct {
@@ -51,7 +52,6 @@ func NewChordClient(cc grpc.ClientConnInterface) ChordClient {
 func (c *chordClient) GetChordNode(ctx context.Context, in *GetChordNodeRequest, opts ...grpc.CallOption) (*GetChordNodeResponse, error) {
 	out := new(GetChordNodeResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/GetChordNode", in, out, opts...)
-	err := c.cc.Invoke(ctx, "/pb.Chord/GetChordNode", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,6 @@ func (c *chordClient) GetChordNode(ctx context.Context, in *GetChordNodeRequest,
 
 func (c *chordClient) RequestFromClient(ctx context.Context, in *GetRequestFromClient, opts ...grpc.CallOption) (*GetResponseToClient, error) {
 	out := new(GetResponseToClient)
-	err := c.cc.Invoke(ctx, "/pb.Chord/RequestFromClient", in, out, opts...)
 	err := c.cc.Invoke(ctx, "/pb.Chord/RequestFromClient", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,7 +70,6 @@ func (c *chordClient) RequestFromClient(ctx context.Context, in *GetRequestFromC
 func (c *chordClient) FindSuccessor(ctx context.Context, in *FindSuccessorRequest, opts ...grpc.CallOption) (*FindSuccessorResponse, error) {
 	out := new(FindSuccessorResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/FindSuccessor", in, out, opts...)
-	err := c.cc.Invoke(ctx, "/pb.Chord/FindSuccessor", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +78,6 @@ func (c *chordClient) FindSuccessor(ctx context.Context, in *FindSuccessorReques
 
 func (c *chordClient) ClientRequestHandler(ctx context.Context, in *ClientRequest, opts ...grpc.CallOption) (*ClientResponse, error) {
 	out := new(ClientResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/ClientRequestHandler", in, out, opts...)
 	err := c.cc.Invoke(ctx, "/pb.Chord/ClientRequestHandler", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -91,7 +88,6 @@ func (c *chordClient) ClientRequestHandler(ctx context.Context, in *ClientReques
 func (c *chordClient) InsertKeyValuePair(ctx context.Context, in *InsertKeyValuePairRequest, opts ...grpc.CallOption) (*InsertKeyValuePairResponse, error) {
 	out := new(InsertKeyValuePairResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/InsertKeyValuePair", in, out, opts...)
-	err := c.cc.Invoke(ctx, "/pb.Chord/InsertKeyValuePair", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +97,6 @@ func (c *chordClient) InsertKeyValuePair(ctx context.Context, in *InsertKeyValue
 func (c *chordClient) GetValueFromKey(ctx context.Context, in *GetValueFromKeyRequest, opts ...grpc.CallOption) (*GetValueFromKeyResponse, error) {
 	out := new(GetValueFromKeyResponse)
 	err := c.cc.Invoke(ctx, "/pb.Chord/GetValueFromKey", in, out, opts...)
-	err := c.cc.Invoke(ctx, "/pb.Chord/GetValueFromKey", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +105,6 @@ func (c *chordClient) GetValueFromKey(ctx context.Context, in *GetValueFromKeyRe
 
 func (c *chordClient) CreateRing(ctx context.Context, in *CreateRingRequest, opts ...grpc.CallOption) (*CreateRingResponse, error) {
 	out := new(CreateRingResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/CreateRing", in, out, opts...)
 	err := c.cc.Invoke(ctx, "/pb.Chord/CreateRing", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -127,9 +121,26 @@ func (c *chordClient) JoinRing(ctx context.Context, in *JoinRingRequest, opts ..
 	return out, nil
 }
 
+func (c *chordClient) LeaveRing(ctx context.Context, in *LeaveRingRequest, opts ...grpc.CallOption) (*LeaveRingResponse, error) {
+	out := new(LeaveRingResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/LeaveRing", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) NewPreSuccessor(ctx context.Context, in *NewPreSuccessorRequest, opts ...grpc.CallOption) (*NewPreSuccessorResponse, error) {
+	out := new(NewPreSuccessorResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/newPreSuccessor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *chordClient) Stabilize(ctx context.Context, in *StabilizeRequest, opts ...grpc.CallOption) (*StabilizeResponse, error) {
 	out := new(StabilizeResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/Stabilize", in, out, opts...)
 	err := c.cc.Invoke(ctx, "/pb.Chord/Stabilize", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -137,9 +148,9 @@ func (c *chordClient) Stabilize(ctx context.Context, in *StabilizeRequest, opts 
 	return out, nil
 }
 
-func (c *chordClient) GetPredecessor(ctx context.Context, in *GetPredecessorRequest, opts ...grpc.CallOption) (*GetPredecessorResponse, error) {
-	out := new(GetPredecessorResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/GetPredecessor", in, out, opts...)
+func (c *chordClient) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error) {
+	out := new(GetInfoResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +159,6 @@ func (c *chordClient) GetPredecessor(ctx context.Context, in *GetPredecessorRequ
 
 func (c *chordClient) Notify(ctx context.Context, in *NotifyRequest, opts ...grpc.CallOption) (*NotifyResponse, error) {
 	out := new(NotifyResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/Notify", in, out, opts...)
 	err := c.cc.Invoke(ctx, "/pb.Chord/Notify", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -165,9 +175,18 @@ func (c *chordClient) FixFingerTable(ctx context.Context, in *FixFingerTableRequ
 	return out, nil
 }
 
-func (c *chordClient) CheckPredecessor(ctx context.Context, in *CheckPredecessorRequest, opts ...grpc.CallOption) (*CheckPredecessorResponse, error) {
-	out := new(CheckPredecessorResponse)
-	err := c.cc.Invoke(ctx, "/pb.Chord/CheckPredecessor", in, out, opts...)
+func (c *chordClient) GetSuccessorList(ctx context.Context, in *GetSuccessorListRequest, opts ...grpc.CallOption) (*GetSuccessorListResponse, error) {
+	out := new(GetSuccessorListResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/GetSuccessorList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chordClient) CheckReplicateData(ctx context.Context, in *CheckReplicateDataRequest, opts ...grpc.CallOption) (*CheckReplicateDataResponse, error) {
+	out := new(CheckReplicateDataResponse)
+	err := c.cc.Invoke(ctx, "/pb.Chord/CheckReplicateData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +212,8 @@ type ChordServer interface {
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	Notify(context.Context, *NotifyRequest) (*NotifyResponse, error)
 	FixFingerTable(context.Context, *FixFingerTableRequest) (*FixFingerTableResponse, error)
-	CheckPredecessor(context.Context, *CheckPredecessorRequest) (*CheckPredecessorResponse, error)
+	GetSuccessorList(context.Context, *GetSuccessorListRequest) (*GetSuccessorListResponse, error)
+	CheckReplicateData(context.Context, *CheckReplicateDataRequest) (*CheckReplicateDataResponse, error)
 	mustEmbedUnimplementedChordServer()
 }
 
@@ -243,8 +263,11 @@ func (UnimplementedChordServer) Notify(context.Context, *NotifyRequest) (*Notify
 func (UnimplementedChordServer) FixFingerTable(context.Context, *FixFingerTableRequest) (*FixFingerTableResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FixFingerTable not implemented")
 }
-func (UnimplementedChordServer) CheckPredecessor(context.Context, *CheckPredecessorRequest) (*CheckPredecessorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckPredecessor not implemented")
+func (UnimplementedChordServer) GetSuccessorList(context.Context, *GetSuccessorListRequest) (*GetSuccessorListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSuccessorList not implemented")
+}
+func (UnimplementedChordServer) CheckReplicateData(context.Context, *CheckReplicateDataRequest) (*CheckReplicateDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckReplicateData not implemented")
 }
 func (UnimplementedChordServer) mustEmbedUnimplementedChordServer() {}
 
@@ -270,7 +293,6 @@ func _Chord_GetChordNode_Handler(srv interface{}, ctx context.Context, dec func(
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/GetChordNode",
-		FullMethod: "/pb.Chord/GetChordNode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).GetChordNode(ctx, req.(*GetChordNodeRequest))
@@ -288,7 +310,6 @@ func _Chord_RequestFromClient_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/RequestFromClient",
 		FullMethod: "/pb.Chord/RequestFromClient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
@@ -308,7 +329,6 @@ func _Chord_FindSuccessor_Handler(srv interface{}, ctx context.Context, dec func
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/FindSuccessor",
-		FullMethod: "/pb.Chord/FindSuccessor",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).FindSuccessor(ctx, req.(*FindSuccessorRequest))
@@ -326,7 +346,6 @@ func _Chord_ClientRequestHandler_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/ClientRequestHandler",
 		FullMethod: "/pb.Chord/ClientRequestHandler",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
@@ -346,7 +365,6 @@ func _Chord_InsertKeyValuePair_Handler(srv interface{}, ctx context.Context, dec
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/InsertKeyValuePair",
-		FullMethod: "/pb.Chord/InsertKeyValuePair",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).InsertKeyValuePair(ctx, req.(*InsertKeyValuePairRequest))
@@ -364,7 +382,6 @@ func _Chord_GetValueFromKey_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/GetValueFromKey",
 		FullMethod: "/pb.Chord/GetValueFromKey",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
@@ -384,7 +401,6 @@ func _Chord_CreateRing_Handler(srv interface{}, ctx context.Context, dec func(in
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/CreateRing",
-		FullMethod: "/pb.Chord/CreateRing",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).CreateRing(ctx, req.(*CreateRingRequest))
@@ -402,7 +418,6 @@ func _Chord_JoinRing_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/JoinRing",
 		FullMethod: "/pb.Chord/JoinRing",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
@@ -458,7 +473,6 @@ func _Chord_Stabilize_Handler(srv interface{}, ctx context.Context, dec func(int
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/Stabilize",
-		FullMethod: "/pb.Chord/Stabilize",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).Stabilize(ctx, req.(*StabilizeRequest))
@@ -476,7 +490,7 @@ func _Chord_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/GetPredecessor",
+		FullMethod: "/pb.Chord/GetInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).GetInfo(ctx, req.(*GetInfoRequest))
@@ -494,7 +508,6 @@ func _Chord_Notify_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/Notify",
 		FullMethod: "/pb.Chord/Notify",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
@@ -514,7 +527,6 @@ func _Chord_FixFingerTable_Handler(srv interface{}, ctx context.Context, dec fun
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: "/pb.Chord/FixFingerTable",
-		FullMethod: "/pb.Chord/FixFingerTable",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChordServer).FixFingerTable(ctx, req.(*FixFingerTableRequest))
@@ -522,20 +534,38 @@ func _Chord_FixFingerTable_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Chord_CheckPredecessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckPredecessorRequest)
+func _Chord_GetSuccessorList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSuccessorListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChordServer).CheckPredecessor(ctx, in)
+		return srv.(ChordServer).GetSuccessorList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Chord/CheckPredecessor",
+		FullMethod: "/pb.Chord/GetSuccessorList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChordServer).CheckPredecessor(ctx, req.(*CheckPredecessorRequest))
+		return srv.(ChordServer).GetSuccessorList(ctx, req.(*GetSuccessorListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Chord_CheckReplicateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckReplicateDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChordServer).CheckReplicateData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Chord/CheckReplicateData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChordServer).CheckReplicateData(ctx, req.(*CheckReplicateDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -604,8 +634,12 @@ var Chord_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Chord_FixFingerTable_Handler,
 		},
 		{
-			MethodName: "CheckPredecessor",
-			Handler:    _Chord_CheckPredecessor_Handler,
+			MethodName: "GetSuccessorList",
+			Handler:    _Chord_GetSuccessorList_Handler,
+		},
+		{
+			MethodName: "CheckReplicateData",
+			Handler:    _Chord_CheckReplicateData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

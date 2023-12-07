@@ -2,8 +2,6 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v3.21.12
-// 	protoc-gen-go v1.26.0
-// 	protoc        v4.25.0
 // source: finger_table.proto
 
 package pb
