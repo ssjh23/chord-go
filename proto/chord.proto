@@ -86,6 +86,8 @@ message NotifyRequest{
 
 message NotifyResponse{
     string predecessor_address = 1;
+    // array of key-value pairs
+    map<string, string> data_to_be_absorbed = 2;
 }
 // message Message {
 //     string message_type = 1;
