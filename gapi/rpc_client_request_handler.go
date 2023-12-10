@@ -1,5 +1,9 @@
 package gapi
 
+// main function that user will call via evans
+// input: requestType (GET or INSERT), key, value
+// return: response
+
 import (
 	"context"
 	"log"
@@ -12,9 +16,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// main function that user will call via evans
-// input: requestType (GET or INSERT), key, value
-// return: response
 func (server *Server) ClientRequestHandler(ctx context.Context, req *pb.ClientRequest) (*pb.ClientResponse, error) {
 	if (req.GetRequestType() != "GET" && req.GetRequestType() != "INSERT") || req.GetRequestedKey() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty and requestType needs to be GET or INSERT")

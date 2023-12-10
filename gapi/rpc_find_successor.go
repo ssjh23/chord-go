@@ -1,5 +1,9 @@
 package gapi
 
+// function that is part of ClientRequestHandler
+// returns the successor of the key
+// it is also used by the FixFingerTable function to update the finger table entries
+
 import (
 	"context"
 	"crypto/sha1"

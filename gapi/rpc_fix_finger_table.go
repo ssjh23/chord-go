@@ -1,5 +1,8 @@
 package gapi
 
+// updates the finger table entries of the node
+// called periodically along with Stabilize
+
 import (
 	"context"
 	"strconv"
@@ -7,9 +10,6 @@ import (
 	"github.com/ssjh23/chord-go/pb"
 )
 
-// helper function call that is part of FindSuccessor
-// updates the finger table entries of the node
-// called periodically along with Stabilize
 func (n *Server) FixFingerTable(ctx context.Context, req *pb.FixFingerTableRequest) (*pb.FixFingerTableResponse, error) {
 	// fmt.Println("fixing finger table.....")
 	for i, finger := range n.fTable {
