@@ -1,5 +1,8 @@
 package gapi
 
+// helper function to change either its successor or predecessor
+// two inputs: successor || predeceessor for addresstype && an ip address to be changed
+// return: successor, predecessor address
 import (
 	"context"
 	"flag"

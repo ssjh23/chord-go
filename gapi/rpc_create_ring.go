@@ -1,3 +1,7 @@
+// function call on a node to initialise a node ring
+// does not require any input
+// return: successor, predecessor, own IP address and hashed id
+
 package gapi
 
 import (
@@ -6,15 +10,10 @@ import (
 
 	"github.com/ssjh23/chord-go/constant"
 	"github.com/ssjh23/chord-go/pb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (n *Server) CreateRing(ctx context.Context, req *pb.CreateRingRequest) (*pb.CreateRingResponse, error) {
 	flag.Parse()
-	if req.GetAddress() == "" {
-		return nil, status.Errorf(codes.InvalidArgument, "Address cannot be empty")
-	}
 
 	m = constant.VALUE_OF_M
 

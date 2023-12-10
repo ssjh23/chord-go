@@ -1,5 +1,9 @@
 package gapi
 
+// quality of life function call to get information about the node and its data and replicated
+// does not require any input
+// return: successor, predecessor, own IP address, successor list, data and replicated data
+
 import (
 	"context"
 	"flag"

@@ -1,5 +1,8 @@
 package gapi
 
+// function call to join a node ring
+// takes in the ip address of a node in an existing node ring
+// return: successor, predecessor, own IP address and hashed id
 import (
 	"context"
 	"flag"

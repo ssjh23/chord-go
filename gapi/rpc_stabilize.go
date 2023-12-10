@@ -1,5 +1,16 @@
 package gapi
 
+// a function that is periodically called every 10 seconds on each of the node to
+// 1. reorganise node ring when a new node joins
+// 	a. notify node
+// 		i. update predecessors
+// 		ii. update successors
+// 7. update successor
+// 2. fix finger table
+// 3. update successor list
+// 4. update replicas in successors
+// 5. migrate data to new successor
+
 import (
 	"context"
 	"flag"
@@ -38,7 +49,6 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 		log.Printf("New successor: %s", newSuccessor)
 		// Sleep for some time before trying again
 		time.Sleep(time.Second)
-		// n.Stabilize(ctx, &pb.StabilizeRequest{IpAddress: ""})
 	}
 	defer conn.Close()
 	if err == nil {
@@ -48,9 +58,6 @@ func (n *Server) Stabilize(ctx context.Context, req *pb.StabilizeRequest) (*pb.S
 		myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
 		successorHashedIP := Sha1Modulo(n.Node.successorAddress, m)
 		successorpredecessorHashedIp := Sha1Modulo(successorPredecessor, m)
-		// log.Printf("My hashed IP: %+v", myHashedIp)
-		// log.Printf("successor haship: %+v", successorHashedIP)
-		// log.Printf("sucessorpredecessor haship: %+v", successorpredecessorHashedIp)
 
 		// handling edge case: i am my own successor
 		if myHashedIp == successorHashedIP {

@@ -1,5 +1,10 @@
 package gapi
 
+// helper function call that is part of stabalise
+// helps to reorganise the ring when a new node is added to the ring - change the predecessor of the newly added node's successor
+// send data, with hashed key values closer to the new node, to the predecessor (new node).
+// input: ip address of the new node
+// return: predecssor address and data that is being sent to the new node
 import (
 	"context"
 	"flag"

@@ -1,5 +1,8 @@
 package gapi
 
+// function call to leave a node ring
+// does not require any input
+// retrun: confirmation of ip that has left the ring
 import (
 	"context"
 	"flag"
