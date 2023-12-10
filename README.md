@@ -1,6 +1,27 @@
 # Chord-go
 Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed Systems (SUTD)
 
+### System Architecture
+
+#### Overview
+
+System Components
+1. Evans Client -> GUI terminal tool to simulate a client requesting or writing data to the network
+2. Docker containers and network -> Simulates a distributed system of nodes in the Chord ring
+3. Chord Node codebase -> Coordinates read and write requests based on their local finger table, hash of the key and their successor
+
+### Features
+* Load Balancing
+	* Keys are hashed and spread evenly around the ring due to consistent hashing via SHA-1
+* Decentralisation
+  	* Our implementation follows the idea that all nodes are equally important and hence the system is fully distributed. This improves robustness of the system.
+* Scalability
+  	* The system is scalable since the cost of the lookup of data grows with the log of the number of nodes in the system
+* Availability
+  	* Finger tables and successor lists are automatically updated whenever a node leaves or joins the network, hence the network is always available for read or writes
+
+### Specific implementations
+Under the `gapi` folder, are all the list of RPCs 
 ### Prerequisites
 1. Go version 1.19
 2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
@@ -87,14 +108,15 @@ each other within the docker network
    ```
    show service
    ```
-   And `GetChordNode` and `RequestFromClient` should be listed
-5. To call either RPCs, use the following command:
+   And all the RPCs should be listed
+   
+6. To call either RPCs, use the following command:
    ```
    call <service_name>
    ```
-6. When prompted, enter the request values into the terminal. The request values do not matter
+7. When prompted, enter the request values into the terminal. The request values do not matter
    for this case, its just to test that requests can be processed
-7. For `GetChordNode`, the response will look similar to
+8. For `GetChordNode`, the response will look similar to
    ```
    {
      "id": "4",
