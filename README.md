@@ -1,4 +1,4 @@
-# chord-go
+# Chord-go
 Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed Systems (SUTD)
 
 ### Prerequisites
