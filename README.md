@@ -1,7 +1,7 @@
 # Chord-go
 Implementation of Chord Distributed Hash System in Golang for 50.041 Distributed Systems (SUTD)
 
-### System Architecture
+## System Architecture
 
 #### Overview
 
@@ -10,7 +10,7 @@ System Components
 2. Docker containers and network -> Simulates a distributed system of nodes in the Chord ring
 3. Chord Node codebase -> Coordinates read and write requests based on their local finger table, hash of the key and their successor
 
-### Features
+## Features
 * Load Balancing
 	* Keys are hashed and spread evenly around the ring due to consistent hashing via SHA-1
 * Decentralisation
@@ -20,7 +20,7 @@ System Components
 * Availability
   	* Finger tables and successor lists are automatically updated whenever a node leaves or joins the network, hence the network is always available for read or writes
 
-### Specific implementations
+## Specific Implementations
 Under the `gapi` folder, are all the list of RPCs 
 ### Prerequisites
 1. Go version 1.19
