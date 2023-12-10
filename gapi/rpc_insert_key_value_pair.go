@@ -8,6 +8,8 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// function call that is part of ClientRequestHandler
+// inserts the key value pair into the node
 func (s *Server) InsertKeyValuePair(ctx context.Context, req *pb.InsertKeyValuePairRequest) (*pb.InsertKeyValuePairResponse, error) {
 	if req.GetKey() == "" {
 		return nil, status.Errorf(codes.InvalidArgument, "id cannot be empty")

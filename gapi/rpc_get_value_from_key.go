@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// function call that is part of FindSuccessor
+// function call that is part of ClientRequestHandler
 // returns the corresponding value for the key
 func (s *Server) GetValueFromKey(ctx context.Context, req *pb.GetValueFromKeyRequest) (*pb.GetValueFromKeyResponse, error) {
 	if req.GetKey() == "" {
