@@ -17,6 +17,7 @@ import (
 
 var m = constant.VALUE_OF_M
 
+// function to hash the input string using SHA-1 and return the modulo
 func Sha1Modulo(inputString string, m int) int64 {
 	// Hash the input string using SHA-1
 	hash := sha1.New()
@@ -36,8 +37,6 @@ func Sha1Modulo(inputString string, m int) int64 {
 
 func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest) (*pb.FindSuccessorResponse, error) {
 
-	// log.Printf("STARTING FIND SUCCESSOR: %s", n.config.ServerAddress)
-
 	// hashing the key
 	hashedKey, _ := strconv.ParseInt(req.GetRequestedKey(), 10, 64)
 	myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
@@ -49,14 +48,8 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.myIpAddress,
 		}
-		// log.Printf("YOUR KEY IS LOCATED AT PORT 1: %s", resp.SuccessorAddress)
 		return resp, nil
 	}
-
-	// if there are only 2 nodes in the network:
-	// if myPredecessorHashedIp == mySuccessorHashedIp && myHashedIp != myPredecessorHashedIp && myHashedIp != mySuccessorHashedIp{
-	// 	if
-	// }
 
 	// if my predecessor is higher than me, check if hashed key is between my predecessor to 2**m, or 0 and me, then i'm the successor
 	if myPredecessorHashedIp > myHashedIp {
@@ -64,7 +57,6 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 			resp := &pb.FindSuccessorResponse{
 				SuccessorAddress: n.Node.myIpAddress,
 			}
-			// log.Printf("YOUR KEY IS LOCATED AT PORT 2: %s", resp.SuccessorAddress)
 			return resp, nil
 		}
 	}
@@ -75,34 +67,24 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 			resp := &pb.FindSuccessorResponse{
 				SuccessorAddress: n.Node.successorAddress,
 			}
-			// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 3: %s", hashedKey, resp.SuccessorAddress)
 			return resp, nil
 		}
 	}
 
 	// if the key is between my predecessor and me, then I am the successor
 	if hashedKey > myPredecessorHashedIp && hashedKey <= myHashedIp {
-		// if myPredecessorHashedIp < hashedKey && hashedKey <= myHashedIp {
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.myIpAddress,
 		}
-		// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 4: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
 	// if the key is between my sucessor and me, then my successor the successor
 	if hashedKey >= myHashedIp && hashedKey < mySuccessorHashedIp {
-		// if myPredecessorHashedIp < hashedKey && hashedKey <= myHashedIp {
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: n.Node.successorAddress,
 		}
-		// log.Printf("YOUR KEY, %v IS LOCATED AT PORT 5: %s", hashedKey, resp.SuccessorAddress)
 		return resp, nil
 	}
-
-	// // SUPER SUS....
-	// if hashedKey < myPredecessorHashedIp {
-
-	// }
 
 	// else, find the closest preceding node
 	nextNodeAddress := n.ClosestPrecedingNode(hashedKey)
@@ -122,7 +104,6 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 		resp := &pb.FindSuccessorResponse{
 			SuccessorAddress: nextNodeResp.SuccessorAddress,
 		}
-		// log.Printf("The successor is: %s", nextNodeResp.SuccessorAddress)
 		return resp, err
 	}
 
@@ -140,7 +121,6 @@ func (n *Server) FindSuccessor(ctx context.Context, req *pb.FindSuccessorRequest
 	resp := &pb.FindSuccessorResponse{
 		SuccessorAddress: nextNodeResp.SuccessorAddress,
 	}
-	// log.Printf("The successor is: %s", nextNodeResp.SuccessorAddress)
 	return resp, err
 }
 
@@ -148,11 +128,8 @@ func (n *Server) ClosestPrecedingNode(hashedKey int64) string {
 	fmt.Printf("n is: %v \n", n)
 	fmt.Printf("len(n.fTable): %d\n", len(n.Node.fTable))
 
-	// myHashedIp := Sha1Modulo(n.Node.myIpAddress, m)
-
 	for i := 6 - 1; i >= 0; i-- {
 		if n.Node.fTable[i].key < hashedKey {
-			// if myHashedIp < n.Node.fTable[i].key && n.Node.fTable[i].key < hashedKey {
 			fmt.Println("INSIDE IF OF CLOSEST PRECEDING NODE")
 			return n.Node.fTable[i].NodeAddress
 		}
